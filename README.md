@@ -103,7 +103,17 @@ all layers, but actually supports other layers by implementing the abstract
 concepts of them.
 
 
-DDD architecture 
+### DDD & Architectures
+
+DDD &  Clean architecture focus on separating the domain code from the application and infrastructure code. But that is where the similarities end.
+
+In Clean/Hexagonal/Onion (or CHO in short) architecture, the goal of this decoupling is testability and modularity with intended effect being that the "core" of our software can be reasoned about in isolation from rest of the world.
+
+In DDD, the main goal is to establish common language with the business experts. The separation of the domain from rest of the application code is just a side effect of this main goal. It also has some say about the design of classes as entities and aggregates, but that is only within the domain itself. It has nothing to say about design outside the domain code.
+
+In practice, you might find that you use both at the same time. You use CHO architecture to design the whole structure of the system, with the "domain core" being isolated in it's separate modules. And then you use DDD to design this domain core in collaboration with domain experts and possibly by using DDD concepts like Entites and Aggregates.
+
+DDD "layer architecture" 
 https://github.com/EduardoPires/EquinoxProject
 https://aspnetboilerplate.com/Pages/Documents/NLayer-Architecture
 
@@ -111,4 +121,7 @@ Clean/Hexagonal/Onion (or CHO in short) architecture
 https://github.com/jasontaylordev/CleanArchitecture
 https://github.com/ardalis/CleanArchitecture
 
-Note: read about: Steve Smith (ardalis), Jason Taylor, Jimmy Bogard, Sam Newman, Martin Fowler 
+Note: read about: Eric Evans, Steve Smith (ardalis), Jason Taylor, Jimmy Bogard, Sam Newman, Martin Fowler 
+Remenber: DDD doesn't enforce any specific architecture, you are free to choose whatever works for your application. DDD guides us in right direction but we are the ones that need to make the decisions for each particular situation. There is no perfect model, all are wrong but some are useful you just need to make the right compromise.
+
+"Be a student, not a follower. Don't just go do what someone says. Take interest in what someone says, then debate it, ponder it, and consider it from all angles." by Jim Rohn
