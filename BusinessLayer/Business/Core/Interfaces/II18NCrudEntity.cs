@@ -2,19 +2,41 @@
 using CrossCutting.SearchFilters;
 using CrossCutting.SearchFilters.DataAccess;
 
-namespace Data.Core.Interfaces
+namespace Business.Core.Interfaces
 {
     /// <summary>
-    /// Exposes methods for reading a business entity
+    /// Defines contract for creating instances an Entity that is subject of internationalization
     /// </summary>
     /// <typeparam name="TEntity">Business entity type</typeparam>
     /// <typeparam name="TIdentifier">Business entity unique key data type</typeparam>
     /// <typeparam name="TSearchFilter">Business entity search/filter object type</typeparam>
-    public interface II18NReadableDao<TEntity, in TIdentifier, in TSearchFilter>
-        where TEntity : IEntity
+    public interface Ii18nCrudEntity<TEntity, in TIdentifier, in TSearchFilter>
+        where TEntity : IBaseEntity
         where TIdentifier : struct
         where TSearchFilter : ISearchFilter
     {
+        /// <summary>
+        /// Creates a new business entity instance
+        /// </summary>
+        /// <param name="entity">Business entity object</param>
+        /// <param name="languageIdentifier">Identifier for the language in which the content should be created</param>
+        /// <returns>The newly created business entity representation</returns>
+        TEntity Create(TEntity entity, int languageIdentifier);
+
+        /// <summary>
+        /// Deletes an Entity information in a specific language.
+        /// </summary>
+        /// <param name="identifier">Business entity unique identifier</param>
+        /// <param name="languageIdentifier">Identifier for the language in which the content should be deleted</param>
+        void Delete(TIdentifier identifier, int languageIdentifier);
+
+        /// <summary>
+        /// Updates an <see cref="TEntity"/> business entity
+        /// </summary>
+        /// <param name="entity"><see cref="TEntity"/> entity</param>
+        /// <param name="languageIdentifier">Identifier for the language in which the content should be updated</param>
+        void Update(TEntity entity, int languageIdentifier);
+
         /// <summary>
         /// Gets an ordered, and optionally filtered, list of <see cref="TEntity"/>
         /// </summary>
@@ -30,5 +52,6 @@ namespace Data.Core.Interfaces
         /// <param name="languageIdentifier">Identifier for the language in which the content should be returned</param>
         /// <returns>The <see cref="TEntity"/> with the specified unique identifier</returns>
         TEntity GetByIdentifier(TIdentifier identifier, int languageIdentifier);
+
     }
 }

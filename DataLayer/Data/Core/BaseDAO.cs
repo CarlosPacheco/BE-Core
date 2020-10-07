@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using CrossCutting.SearchFilters.DataAccess;
+using Data.Core.Interfaces;
 using Serilog;
 
 namespace Data.Core

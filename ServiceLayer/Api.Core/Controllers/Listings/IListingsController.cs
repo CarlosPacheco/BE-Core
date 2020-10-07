@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
-namespace DDDReflection.Controllers.Listings
+namespace Api.Core.Controllers.Listings
 {
     /// <summary>
     /// Listings controller implementation definition

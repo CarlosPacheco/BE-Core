@@ -6,11 +6,6 @@ namespace CrossCutting.Exceptions
     {
         public int? Code { get; set; }
 
-        protected CustomException(string message) : base(message)
-        {
-            Code = null;
-        }
-
         protected CustomException(string message, int? code = null) : base(message)
         {
             Code = code;

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 
-namespace DDDReflection.Controllers.Listings
+namespace Api.Core.Controllers.Listings
 {
     /// <summary>
     /// Listings controller class

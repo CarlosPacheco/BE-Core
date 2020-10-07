@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
 
-namespace Data.Core
+namespace Data.Core.Interfaces
 {
     public interface IBaseDao : IDisposable
     {

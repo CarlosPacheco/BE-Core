@@ -81,7 +81,7 @@ namespace Business.LogicObjects.Product
               {
                   Product.Id,
                   Product.Name,
-                  LastUpdatedOn = Product.UpdatedOn.ToString("dd/MM/yyyy hh:mm")
+                  LastUpdatedOn = Product.UpdatedOn?.ToString("dd/MM/yyyy hh:mm")
               }).ToList<dynamic>();
 
             if (mediaTypeName == MediaType.Application.Csv)

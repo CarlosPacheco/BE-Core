@@ -1,4 +1,4 @@
-﻿using Data.Core;
+﻿using Data.Core.Interfaces;
 
 namespace Data.AccessObjects.MultimediaFiles
 {

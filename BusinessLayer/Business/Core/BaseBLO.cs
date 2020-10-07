@@ -2,7 +2,7 @@
 using System.Data;
 using Business.Entities;
 using CrossCutting.Security.Identity;
-using Data.Core;
+using Data.Core.Interfaces;
 
 namespace Business.Core
 {
@@ -92,7 +92,7 @@ namespace Business.Core
     /// <typeparam name="TEntity">Business entity type</typeparam>
     /// <typeparam name="TDataAccessObject">Business entity corresponding data access object type</typeparam>
     public abstract class BaseBlo<TEntity, TDataAccessObject> : BaseBlo<TDataAccessObject>
-        where TEntity : class, IEntity, new()
+        where TEntity : class, IBaseEntity, new()
         where TDataAccessObject : IBaseDao
     {
         

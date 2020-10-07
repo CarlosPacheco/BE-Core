@@ -9,9 +9,8 @@ namespace Business.Core.Interfaces
     /// </summary>
     /// <typeparam name="TEntity">Business entity type</typeparam>
     /// <typeparam name="TIdentifier">Business entity unique identifier type</typeparam>
-    [Obsolete("Not used anymore. Contract was split in multiples Interfaces for different kinds of operations. See II18Nxxxxx interfaces.")]
     public interface ITranslatableEntity<in TEntity, in TIdentifier>
-        where TEntity : IEntity
+        where TEntity : IBaseEntity
         where TIdentifier : struct
     {
         /// <summary>

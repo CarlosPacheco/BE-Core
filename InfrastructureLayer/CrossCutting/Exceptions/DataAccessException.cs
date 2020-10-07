@@ -9,11 +9,11 @@ namespace CrossCutting.Exceptions
         {
         }
 
-        public DataAccessException(string message, int? code = null) : base(message)
+        public DataAccessException(string message, int? code = null) : base(message, code)
         {
         }
 
-        public DataAccessException(string message, Exception innerException, int? code = null) : base(message, innerException)
+        public DataAccessException(string message, Exception innerException, int? code = null) : base(message, innerException, code)
         {
         }
 

@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 
-namespace DDDReflection.Controllers.Product
+namespace Api.Core.Controllers.Product
 {
     [Route("api/[controller]")]
     public class ProductController : BaseApiController, IProductController

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Business.SearchFilters;
-using Data.Core;
+using Data.Core.Interfaces;
 
 namespace Data.AccessObjects.Product
 {

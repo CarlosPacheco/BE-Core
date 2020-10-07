@@ -2,7 +2,7 @@
 using Business.Core;
 using CrossCutting.Security.Identity;
 using CrossCutting.Web.Services;
-using Data.Core;
+using Data.Core.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Scrutor;
 

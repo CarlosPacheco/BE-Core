@@ -55,5 +55,25 @@ namespace CrossCutting.Helpers.Extensions
 
             return parameter;
         }
+
+        /// <summary>
+        /// Adds an input parameter to a <see cref="DbCommand"/> with a specified value
+        /// </summary>
+        /// <param name="parameters">Target parameter collection</param>
+        /// <param name="parameterName">Parameter name</param>
+        /// <param name="parameterType">Parameter database type</param>
+        /// <param name="parameterValue">Parameter value</param>
+        /// <returns>A new <see cref="DbParameter"/></returns>
+        public static DbParameter Add(this DbParameterCollection parameters, string parameterName, DbType parameterType, object parameterValue, ParameterDirection direction = ParameterDirection.Input)
+        {
+            SqlParameter parameter = new SqlParameter();
+            parameter.ParameterName = parameterName;
+            parameter.DbType = parameterType;
+            parameter.Value = parameterValue;
+            parameter.Direction = direction;
+            parameters.Add(parameter);
+
+            return parameter;
+        }
     }
 }

@@ -3,7 +3,7 @@ using Data.TransferObjects.Product;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DDDReflection.Controllers.Product
+namespace Api.Core.Controllers.Product
 {
     public interface IProductController
     {

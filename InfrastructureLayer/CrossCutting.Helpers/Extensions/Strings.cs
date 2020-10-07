@@ -9,7 +9,7 @@ namespace CrossCutting.Helpers.Extensions
 	public static class Strings
     {
         private static readonly Regex MultipleSpaces = new Regex(@" {2,}", RegexOptions.Compiled);
-        
+
         #region Parse Numerics
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace CrossCutting.Helpers.Extensions
         }
 
         /// <summary>
-        /// Tries to cast <see cref="System.String"/> to <see cref="System.Decimal"/>.
+        /// Tries to cast <see cref="string"/> to <see cref="decimal"/>.
         /// </summary>
         /// <param name="str">Target string.</param>
         /// <returns>The Decimal value of the string. If string is empty, null, white space or the cast fails null is returned.</returns>
@@ -124,11 +124,11 @@ namespace CrossCutting.Helpers.Extensions
         }
 
         /// <summary>
-        /// Tries to cast <see cref="System.String"/> to <see cref="System.Double"/>.
+        /// Tries to cast <see cref="string"/> to <see cref="double"/>.
         /// </summary>
         /// <param name="str">Target string.</param>
         /// <param name="value">Output variable.</param>
-        /// <returns>The <see cref="System.Double"/> value of the string. If string is empty, null, white space or the cast fails null is returned.</returns>
+        /// <returns>The <see cref="double"/> value of the string. If string is empty, null, white space or the cast fails null is returned.</returns>
         public static bool TryParseToNullableDouble(this string str, out double? value)
         {
             if (string.IsNullOrWhiteSpace(str))
@@ -153,12 +153,12 @@ namespace CrossCutting.Helpers.Extensions
         }
 
         /// <summary>
-        /// Tries to cast <see cref="System.String"/> to <see cref="System.Double"/>.
+        /// Tries to cast <see cref="string"/> to <see cref="double"/>.
         /// </summary>
         /// <param name="str">Source string.</param>
         /// <param name="culture">An object that supplies culture-specific formatting information about the source string.</param>
         /// <param name="value">The output variable.</param>
-        /// <returns>The <see cref="System.Double"/> value of the string. If string is empty, null, white space or the cast fails null is returned.</returns>
+        /// <returns>The <see cref="double"/> value of the string. If string is empty, null, white space or the cast fails null is returned.</returns>
         public static bool TryParseToNullableDouble(this string str, IFormatProvider culture, out double? value)
         {
             if (string.IsNullOrWhiteSpace(str))
@@ -183,7 +183,7 @@ namespace CrossCutting.Helpers.Extensions
         }
 
         /// <summary>
-        /// Tries to cast <see cref="System.String"/> to <see cref="System.Int32"/>.
+        /// Tries to cast <see cref="string"/> to <see cref="int"/>.
         /// </summary>
         /// <param name="str">Target string.</param>
         /// <returns>The Int32 value of the string. If string is empty, null, white space or the cast fails null is returned.</returns>
@@ -211,7 +211,7 @@ namespace CrossCutting.Helpers.Extensions
         }
 
         /// <summary>
-        /// Tries to cast <see cref="System.String"/> to <see cref="System.Int64"/>.
+        /// Tries to cast <see cref="string"/> to <see cref="long"/>.
         /// </summary>
         /// <param name="str">Target string.</param>
         /// <returns>The Int64 value of the string. If string is empty, null, white space or the cast fails null is returned.</returns>
@@ -239,7 +239,7 @@ namespace CrossCutting.Helpers.Extensions
         }
 
         #endregion
-        
+
         #region String Manipulation
 
         public static string RemoveMultipleSpaces(this string value)
@@ -257,7 +257,7 @@ namespace CrossCutting.Helpers.Extensions
         }
 
         #endregion
-        
+
         #region String Checks
 
         public static string IfEmptyOrWhiteSpace(this string str, string value)
@@ -292,7 +292,7 @@ namespace CrossCutting.Helpers.Extensions
         }
 
         #endregion
-        
+
         #region Conditional Values Helpers
 
         public static string UseNullIfEmptyOrWhiteSpace(this string str)
@@ -321,6 +321,6 @@ namespace CrossCutting.Helpers.Extensions
             return result;
         }
 
-        #endregion        
-	}
+        #endregion
+    }
 }
