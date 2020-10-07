@@ -54,7 +54,7 @@ namespace Api.Core
             //load here other external dll controllers classes (before the AddMvc/Routing)
             //https://docs.microsoft.com/en-us/aspnet/core/fundamentals/routing?view=aspnetcore-2.2#use-routing-middleware
 
-            services.AddMvc(options => { }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+            services.AddMvc()
             .AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
@@ -78,7 +78,7 @@ namespace Api.Core
             services.Configure<CorsConfig>(Configuration.GetSection("Cors"));
 
             // IoC Logger 
-            services.AddSerilog(Configuration.GetSection("Logging").GetValue<string>("FilePath"));
+            services.AddSerilog(Configuration); //Configuration.GetSection("Logging").GetValue<string>("FilePath"));
 
             // Configure object mapping (AutoMapper), Get the assembly, AutoMapper will scan our assembly and look for classes that inherit from Profile
             services.AddAutoMapper(typeof(MappingProfile));

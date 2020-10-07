@@ -1,13 +1,14 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
 namespace CrossCutting.IoC.Extensions
 {
     public static class Serilog
     {
-        public static void AddSerilog(this IServiceCollection services, string loggerPath)
+        public static void AddSerilog(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddSingleton((ILogger)new LoggerConfiguration().MinimumLevel.Verbose().WriteTo.RollingFile(loggerPath).CreateLogger());
+            services.AddSingleton((ILogger)new LoggerConfiguration().ReadFrom.Configuration(configuration)/*MinimumLevel.Verbose().WriteTo.RollingFile(loggerPath)*/.CreateLogger());
         }
     }
 }
