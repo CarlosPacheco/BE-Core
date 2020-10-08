@@ -8,7 +8,7 @@ namespace CrossCutting.IoC.Extensions
     {
         public static void AddSerilog(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddSingleton((ILogger)new LoggerConfiguration().ReadFrom.Configuration(configuration)/*MinimumLevel.Verbose().WriteTo.RollingFile(loggerPath)*/.CreateLogger());
+            services.AddSingleton((ILogger)new LoggerConfiguration().ReadFrom.Configuration(configuration).CreateLogger());
         }
     }
 }
