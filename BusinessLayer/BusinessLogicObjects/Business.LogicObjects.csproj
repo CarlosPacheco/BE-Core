@@ -14,14 +14,11 @@
 
   <ItemGroup>
     <None Remove="Business.LogicObjects.csproj.vspscc" />
-
-    <Compile Include="Product/IProductBLO.cs" />
-    <Compile Include="Product/IProductBLO.Listings.cs">
-      <DependentUpon>Product/IProductBLO.cs</DependentUpon>
+    <Compile Include="Product/IProductBlo.Listings.cs">
+      <DependentUpon>Product/IProductBlo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Product/ProductBLO.cs" />
-    <Compile Include="Product/ProductBLO.Listings.cs">
-      <DependentUpon>Product/ProductBLO.cs</DependentUpon>
+    <Compile Include="Product/ProductBlo.Listings.cs">
+      <DependentUpon>Product/ProductBlo.cs</DependentUpon>
     </Compile>
   </ItemGroup>
 

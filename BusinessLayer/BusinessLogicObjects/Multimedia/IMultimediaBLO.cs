@@ -5,7 +5,7 @@ namespace Business.LogicObjects.MultimediaFiles
     /// <summary>
     /// Describes a Logic Controller for <see cref="UploadedFileVO"/> business entity
     /// </summary>
-    public partial interface IMultimediaBLO
+    public partial interface IMultimediaBlo
     {
         /// <summary>
         /// Uploaded the image

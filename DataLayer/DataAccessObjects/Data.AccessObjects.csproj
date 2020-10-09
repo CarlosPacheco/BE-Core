@@ -14,21 +14,17 @@
 
   <ItemGroup>
     <None Remove="Data.AccessObjects.csproj.vspscc" />
-
-    <Compile Include="Multimedia/MultimediaDAO.cs" />
-    <Compile Include="Multimedia/MultimediaDAO.Querys.cs">
-      <DependentUpon>Multimedia/MultimediaDAO.cs</DependentUpon>
+    <Compile Include="Multimedia/MultimediaDao.Querys.cs">
+      <DependentUpon>Multimedia/MultimediaDao.cs</DependentUpon>
     </Compile>
-    <Compile Include="Product/IProductDAO.cs" />
-    <Compile Include="Product/IProductDAO.Listings.cs">
-      <DependentUpon>Product/IProductDAO.cs</DependentUpon>
+    <Compile Include="Product/IProductDao.Listings.cs">
+      <DependentUpon>Product/IProductDao.cs</DependentUpon>
     </Compile>
-    <Compile Include="Product/ProductDAO.cs" />
-    <Compile Include="Product/ProductDAO.Listings.cs">
-      <DependentUpon>Product/ProductDAO.cs</DependentUpon>
+    <Compile Include="Product/ProductDao.Listings.cs">
+      <DependentUpon>Product/ProductDao.cs</DependentUpon>
     </Compile>
-    <Compile Include="Product/ProductDAO.Querys.cs">
-      <DependentUpon>Product/ProductDAO.cs</DependentUpon>
+    <Compile Include="Product/ProductDao.Querys.cs">
+      <DependentUpon>Product/ProductDao.cs</DependentUpon>
     </Compile>
   </ItemGroup>
 

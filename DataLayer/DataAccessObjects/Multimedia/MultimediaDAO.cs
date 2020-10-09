@@ -8,14 +8,14 @@ using Serilog;
 
 namespace Data.AccessObjects.MultimediaFiles
 {
-    public partial class MultimediaDAO : BaseDao, IMultimediaDAO
+    public partial class MultimediaDao : BaseDao, IMultimediaDao
     {
         /// <summary>
-        /// Initializes a new instance of <see cref="MultimediaDAO"/>
+        /// Initializes a new instance of <see cref="MultimediaDao"/>
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="dbConnection">Database <see cref="IDbConnection"/> to be use with the instance</param>
-        public MultimediaDAO(ILogger logger, IDbConnection dbConnection, IPagedQueryBuilder pagedQueryBuilder) : base(logger, dbConnection, pagedQueryBuilder)
+        public MultimediaDao(ILogger logger, IDbConnection dbConnection, IPagedQueryBuilder pagedQueryBuilder) : base(logger, dbConnection, pagedQueryBuilder)
         {
         }
 

@@ -15,14 +15,14 @@ namespace Business.LogicObjects.Product
 {
     public partial class ProductBlo : BaseBlo<IProductDao>, IProductBlo
     {
-        public IMultimediaBLO MultimediaBLO { get; set; }
+        public IMultimediaBlo MultimediaBLO { get; set; }
 
         /// <summary>
         /// Initializes a new instance of <see cref="ProductBlo"/> (Business Controller)
         /// </summary>
         /// <param name="authorization">Security information access object to be used by this instance</param>
         /// <param name="dataAccess">Application Request's data access object to be used by this instance</param>
-        public ProductBlo(IProductDao dataAccess, IAuthorization authorization, IMultimediaBLO multimediaBLO) : base(dataAccess, authorization)
+        public ProductBlo(IProductDao dataAccess, IAuthorization authorization, IMultimediaBlo multimediaBLO) : base(dataAccess, authorization)
         {
             MultimediaBLO = multimediaBLO;
         }

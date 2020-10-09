@@ -10,18 +10,18 @@ using System.IO;
 
 namespace Business.LogicObjects.MultimediaFiles
 {
-    public class MultimediaBLO : BaseBlo<IMultimediaDAO>, IMultimediaBLO
+    public class MultimediaBlo : BaseBlo<IMultimediaDao>, IMultimediaBlo
     {
         public IConfiguration Configuration { get; private set; }
 
         private readonly IOptions<UploadedConfig> Config;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="MultimediaBLO"/> (Business Controller)
+        /// Initializes a new instance of <see cref="MultimediaBlo"/> (Business Controller)
         /// </summary>
         /// <param name="authorization">Security information access object to be used by this instance</param>
         /// <param name="dataAccess">Application Request's data access object to be used by this instance</param>
-        public MultimediaBLO(IMultimediaDAO dataAccess, IAuthorization authorization, IConfiguration configuration, IOptions<UploadedConfig> config) : base(dataAccess, authorization)
+        public MultimediaBlo(IMultimediaDao dataAccess, IAuthorization authorization, IConfiguration configuration, IOptions<UploadedConfig> config) : base(dataAccess, authorization)
         {
             Configuration = configuration;
             Config = config;

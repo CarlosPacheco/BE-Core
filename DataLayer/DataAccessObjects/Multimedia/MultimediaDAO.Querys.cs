@@ -3,7 +3,7 @@ using Dapper;
 
 namespace Data.AccessObjects.MultimediaFiles
 {
-    public partial class MultimediaDAO
+    public partial class MultimediaDao
     {
         /// <summary>
         /// Sql query template for Get.
