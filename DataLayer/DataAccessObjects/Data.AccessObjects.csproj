@@ -22,7 +22,6 @@
     <ProjectReference Include="..\..\BusinessLayer\BusinessValueObjects\Business.ValueObjects.csproj" />
     <ProjectReference Include="..\..\InfrastructureLayer\CrossCutting.Helpers\CrossCutting.Helpers.csproj" />
     <ProjectReference Include="..\..\InfrastructureLayer\CrossCutting\CrossCutting.csproj" />
-    <ProjectReference Include="..\DataMapping\Data.Mapping.csproj" />
     <ProjectReference Include="..\Data\Data.csproj" />
   </ItemGroup>
 
