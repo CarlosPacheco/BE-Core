@@ -2,7 +2,7 @@
 using CrossCutting.Web.Binders;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Data.TransferObjects.Product
+namespace Data.TransferObjects
 {
     [ModelBinder(typeof(JsonFormDataModelBinder))]
     public class ProductDto

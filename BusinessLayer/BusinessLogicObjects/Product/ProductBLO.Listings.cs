@@ -9,7 +9,7 @@ namespace Business.LogicObjects.Product
         /// Get the listings Products 
         /// </summary>
         /// <returns>The list of Products </returns>
-        public IEnumerable<Entities.Product.Product> GetProductListing()
+        public IEnumerable<Entities.Product> GetProductListing()
         {
             return DataAccess.GetProductListing();
         }

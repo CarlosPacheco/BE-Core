@@ -12,4 +12,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="CrossCutting.TypewriterCore.csproj.vspscc" />
+  </ItemGroup>
+
 </Project>

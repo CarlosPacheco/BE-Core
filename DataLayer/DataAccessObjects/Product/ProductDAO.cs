@@ -21,9 +21,9 @@ namespace Data.AccessObjects.Product
         /// </summary>
         /// <param name="searchFilter">Filtering and ordering restrictions</param>
         /// <returns>A list of Products</returns>
-        public IEnumerable<Business.Entities.Product.Product> Get(ProductSearchFilter searchFilter)
+        public IEnumerable<Business.Entities.Product> Get(ProductSearchFilter searchFilter)
         {
-            return ExecutePagedQuery<Business.Entities.Product.Product>(GetGetQuery(searchFilter, out object parameters), searchFilter, parameters);
+            return ExecutePagedQuery<Business.Entities.Product>(GetGetQuery(searchFilter, out object parameters), searchFilter, parameters);
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace Data.AccessObjects.Product
         /// </summary>
         /// <param name="productDto">Patch object containing the new Product value</param>
         /// <returns>The modified Product object</returns>
-        public void Update(Business.Entities.Product.Product productDto)
+        public void Update(Business.Entities.Product productDto)
         {
             try
             {
@@ -71,7 +71,7 @@ namespace Data.AccessObjects.Product
         /// </summary>
         /// <param name="productDto">The new entity description object</param>
         /// <returns>The newly created Product</returns>  
-        public int Create(Business.Entities.Product.Product productDto)
+        public int Create(Business.Entities.Product productDto)
         {
             try
             {
@@ -116,9 +116,9 @@ namespace Data.AccessObjects.Product
         /// </summary>
         /// <param name="id">The case unique identifier</param>
         /// <returns>Case with the specified unique identifier</returns>
-        public Business.Entities.Product.Product GetById(int id)
+        public Business.Entities.Product GetById(int id)
         {
-            Business.Entities.Product.Product Product = DbConnection.Query<Business.Entities.Product.Product> (QueryGetByIdentifier, new { Id = id }, CurrentTransaction).FirstOrDefault();
+            Business.Entities.Product Product = DbConnection.Query<Business.Entities.Product> (QueryGetByIdentifier, new { Id = id }, CurrentTransaction).FirstOrDefault();
 
             if (Product == null)
             {

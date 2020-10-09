@@ -13,6 +13,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Data.TransferObjects.csproj.vspscc" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\BusinessLayer\BusinessEnums\Business.Enums.csproj" />
     <ProjectReference Include="..\..\InfrastructureLayer\CrossCutting.Web\CrossCutting.Web.csproj" />
   </ItemGroup>

@@ -11,27 +11,27 @@ namespace Data.AccessObjects.Product
         /// </summary>
         /// <param name="searchFilter">Filtering and ordering restrictions</param>
         /// <returns>A list of Products</returns>
-        IEnumerable<Business.Entities.Product.Product> Get(ProductSearchFilter searchFilter);
+        IEnumerable<Business.Entities.Product> Get(ProductSearchFilter searchFilter);
 
         /// <summary>
         /// Updates a Product with the specified information
         /// </summary>
         /// <param name="productDto">Patch object containing the new Product value</param>
         /// <returns>The modified Product object</returns>
-        void Update(Business.Entities.Product.Product productDto);
+        void Update(Business.Entities.Product productDto);
 
         /// <summary>
         /// Creates a new Product 
         /// </summary>
         /// <param name="productDto">The new entity description object</param>
         /// <returns>The newly created Product</returns>  
-        int Create(Business.Entities.Product.Product productDto);
+        int Create(Business.Entities.Product productDto);
 
         /// <summary>
         /// Gets an Product by it's unique identifier
         /// </summary>
         /// <param name="id">The Product unique identifier</param>
         /// <returns>Product with the specified unique identifier</returns>
-        Business.Entities.Product.Product GetById(int id);
+        Business.Entities.Product GetById(int id);
     }
 }

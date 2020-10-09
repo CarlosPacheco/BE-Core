@@ -22,6 +22,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="CrossCutting.csproj.vspscc" />
+  </ItemGroup>
+
+  <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="AutoMapper" Version="10.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />

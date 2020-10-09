@@ -6,7 +6,7 @@ using Business.SearchFilters;
 using CrossCutting.SearchFilters.Extensions;
 using CrossCutting.Security.Identity;
 using CrossCutting.Web.Services;
-using Data.TransferObjects.Product;
+using Data.TransferObjects;
 using Microsoft.AspNetCore.Http;
 
 namespace Application.Services.Product
@@ -24,8 +24,8 @@ namespace Application.Services.Product
         /// <returns>A list of Products</returns>
         public IEnumerable<ProductDto> Get(ProductSearchFilter searchFilter)
         {
-            IEnumerable<Business.Entities.Product.Product> lotList = BusinessLogic.Get(searchFilter);
-            IEnumerable<ProductDto> lotDto = Mapper.MapPaged<ProductDto, Business.Entities.Product.Product>(lotList);
+            IEnumerable<Business.Entities.Product> lotList = BusinessLogic.Get(searchFilter);
+            IEnumerable<ProductDto> lotDto = Mapper.MapPaged<ProductDto, Business.Entities.Product>(lotList);
 
             return lotDto;
         }
@@ -37,7 +37,7 @@ namespace Application.Services.Product
         /// <returns>The modified Product object</returns>
         public void Update(ProductDto caseDto, IFormFile file)
         {
-            Business.Entities.Product.Product Product = Mapper.Map<Business.Entities.Product.Product>(caseDto);
+            Business.Entities.Product Product = Mapper.Map<Business.Entities.Product>(caseDto);
            
             BusinessLogic.Update(Product);
         }
@@ -49,7 +49,7 @@ namespace Application.Services.Product
         /// <returns>The newly created Product</returns>  
         public ProductDto Create(ProductDto productDto, IFormFile file)
         {
-            Business.Entities.Product.Product product = BusinessLogic.Create(Mapper.Map<Business.Entities.Product.Product>(productDto));
+            Business.Entities.Product product = BusinessLogic.Create(Mapper.Map<Business.Entities.Product>(productDto));
 
             return GetById(product.Id.Value);
         }
@@ -61,7 +61,7 @@ namespace Application.Services.Product
         /// <returns>Product with the specified unique identifier</returns>
         public ProductDto GetById(int id)
         {
-            Business.Entities.Product.Product product = BusinessLogic.GetById(id);
+            Business.Entities.Product product = BusinessLogic.GetById(id);
             ProductDto productDto = Mapper.Map<ProductDto>(product);
 
             return productDto;

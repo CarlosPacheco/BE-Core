@@ -13,6 +13,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Data.Mapping.csproj.vspscc" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.35" />
     <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="2.19.90" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />

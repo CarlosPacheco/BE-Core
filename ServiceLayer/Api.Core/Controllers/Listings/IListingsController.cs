@@ -1,4 +1,4 @@
-﻿using Data.TransferObjects.Listings;
+﻿using Data.TransferObjects;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using Business.Entities.Product;
-using Data.TransferObjects.Listings;
-using Data.TransferObjects.Product;
+using Business.Entities;
+using Data.TransferObjects;
 
 namespace Application.ObjectMapping
 {

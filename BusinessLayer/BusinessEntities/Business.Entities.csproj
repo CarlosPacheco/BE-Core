@@ -13,6 +13,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Business.Entities.csproj.vspscc" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BusinessEnums\Business.Enums.csproj" />
   </ItemGroup>
 

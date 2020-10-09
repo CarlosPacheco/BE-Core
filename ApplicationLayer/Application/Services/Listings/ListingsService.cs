@@ -5,7 +5,7 @@ using Business.SearchFilters;
 using CrossCutting.Exceptions;
 using CrossCutting.Security.Identity;
 using CrossCutting.Web.Services;
-using Data.TransferObjects.Listings;
+using Data.TransferObjects;
 using Microsoft.AspNetCore.Http;
 
 namespace Application.Services.Listings
@@ -25,7 +25,7 @@ namespace Application.Services.Listings
         /// <returns>The list of Products </returns>
         public IEnumerable<ListingDto> GetProductListing()
         {
-            IEnumerable<Business.Entities.Product.Product> result = BusinessLogic.GetProductListing();
+            IEnumerable<Business.Entities.Product> result = BusinessLogic.GetProductListing();
 
             if (result == null)
             {

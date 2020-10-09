@@ -6,7 +6,7 @@ using Application.Services.Product;
 using Business.SearchFilters;
 using CrossCutting.Web.Controllers;
 using CrossCutting.Web.Mime;
-using Data.TransferObjects.Product;
+using Data.TransferObjects;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;

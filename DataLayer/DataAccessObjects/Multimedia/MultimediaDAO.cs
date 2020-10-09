@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Data;
-using Business.Entities.Multimedia;
+using Business.Entities;
 using CrossCutting.SearchFilters.DataAccess;
 using Dapper;
 using Data.Core;

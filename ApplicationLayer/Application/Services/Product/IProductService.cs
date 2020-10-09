@@ -3,7 +3,7 @@ using System.IO;
 using Business.LogicObjects.Product;
 using Business.SearchFilters;
 using CrossCutting.Web.Services;
-using Data.TransferObjects.Product;
+using Data.TransferObjects;
 using Microsoft.AspNetCore.Http;
 
 namespace Application.Services.Product

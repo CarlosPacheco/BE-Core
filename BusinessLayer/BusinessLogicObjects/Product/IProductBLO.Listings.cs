@@ -9,6 +9,6 @@ namespace Business.LogicObjects.Product
         /// Get the listings Products
         /// </summary>
         /// <returns>The list of Products </returns>
-        IEnumerable<Entities.Product.Product> GetProductListing();
+        IEnumerable<Entities.Product> GetProductListing();
     }
 }

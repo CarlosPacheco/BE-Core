@@ -1,5 +1,5 @@
 ﻿using Business.Core;
-using Business.Entities.Multimedia;
+using Business.Entities;
 using CrossCutting.Configurations;
 using CrossCutting.Security.Identity;
 using Data.AccessObjects.MultimediaFiles;

@@ -12,4 +12,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Business.Enums.csproj.vspscc" />
+  </ItemGroup>
+
 </Project>

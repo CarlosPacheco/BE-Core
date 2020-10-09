@@ -13,6 +13,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Business.csproj.vspscc" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\DataLayer\Data\Data.csproj" />
     <ProjectReference Include="..\..\InfrastructureLayer\CrossCutting\CrossCutting.csproj" />
     <ProjectReference Include="..\BusinessEntities\Business.Entities.csproj" />

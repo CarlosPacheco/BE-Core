@@ -13,6 +13,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Data.AccessObjects.csproj.vspscc" />
+
+    <Compile Include="Multimedia/MultimediaDAO.cs" />
+    <Compile Include="Multimedia/MultimediaDAO.Querys.cs">
+      <DependentUpon>Multimedia/MultimediaDAO.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Product/IProductDAO.cs" />
+    <Compile Include="Product/IProductDAO.Listings.cs">
+      <DependentUpon>Product/IProductDAO.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Product/ProductDAO.cs" />
+    <Compile Include="Product/ProductDAO.Listings.cs">
+      <DependentUpon>Product/ProductDAO.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Product/ProductDAO.Querys.cs">
+      <DependentUpon>Product/ProductDAO.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
   </ItemGroup>
 

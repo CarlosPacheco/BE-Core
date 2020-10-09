@@ -1,5 +1,5 @@
 ﻿using Business.SearchFilters;
-using Data.TransferObjects.Product;
+using Data.TransferObjects;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

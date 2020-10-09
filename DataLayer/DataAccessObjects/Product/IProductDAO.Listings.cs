@@ -9,6 +9,6 @@ namespace Data.AccessObjects.Product
         /// Get the listings Products
         /// </summary>
         /// <returns>The list of Products </returns>
-        IEnumerable<Business.Entities.Product.Product> GetProductListing();
+        IEnumerable<Business.Entities.Product> GetProductListing();
     }
 }

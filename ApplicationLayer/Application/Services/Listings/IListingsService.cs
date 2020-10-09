@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Business.SearchFilters;
-using Data.TransferObjects.Listings;
+using Data.TransferObjects;
 
 namespace Application.Services.Listings
 {

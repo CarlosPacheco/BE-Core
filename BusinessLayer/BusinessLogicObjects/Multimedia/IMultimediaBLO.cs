@@ -1,4 +1,4 @@
-﻿using Business.Entities.Multimedia;
+﻿using Business.Entities;
 
 namespace Business.LogicObjects.MultimediaFiles
 {

@@ -2,7 +2,7 @@
 using Application.Services.Listings;
 using Business.SearchFilters;
 using CrossCutting.Web.Controllers;
-using Data.TransferObjects.Listings;
+using Data.TransferObjects;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;

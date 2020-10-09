@@ -1,4 +1,4 @@
-﻿namespace Data.TransferObjects.Listings
+﻿namespace Data.TransferObjects
 {
     public class ListingDto
     {

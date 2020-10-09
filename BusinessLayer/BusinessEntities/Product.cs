@@ -1,4 +1,4 @@
-﻿namespace Business.Entities.Product
+﻿namespace Business.Entities
 {
     public class Product : BaseEntity
     {
