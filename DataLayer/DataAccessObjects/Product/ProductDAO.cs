@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using Business.Core.Data;
 using Business.SearchFilters;
 using CrossCutting.Exceptions;
 using CrossCutting.SearchFilters.DataAccess;
 using Dapper;
-using Data.Core;
 
 namespace Data.AccessObjects.Product
 {

@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
-using CrossCutting.SearchFilters.DataAccess;
 using CrossCutting.Web.ContentResponses;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;

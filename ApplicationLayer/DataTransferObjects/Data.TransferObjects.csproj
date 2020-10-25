@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BusinessLayer\BusinessEnums\Business.Enums.csproj" />
     <ProjectReference Include="..\..\InfrastructureLayer\CrossCutting.Web\CrossCutting.Web.csproj" />
   </ItemGroup>
 

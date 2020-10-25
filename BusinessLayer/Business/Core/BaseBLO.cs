@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Data;
+using Business.Core.Data.Interfaces;
 using Business.Entities;
 using CrossCutting.Security.Identity;
-using Data.Core.Interfaces;
 
 namespace Business.Core
 {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Data;
+using Business.Core.Data;
 using Business.Entities;
 using CrossCutting.SearchFilters.DataAccess;
 using Dapper;
-using Data.Core;
 using Serilog;
 
 namespace Data.AccessObjects.MultimediaFiles

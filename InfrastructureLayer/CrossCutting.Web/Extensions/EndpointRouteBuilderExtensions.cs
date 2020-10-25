@@ -11,8 +11,6 @@ namespace CrossCutting.Web.Extensions
 {
     public static class EndpointRouteBuilderExtensions
     {
-       
-
         public static IEndpointRouteBuilder MapSignalRRoutes(this IEndpointRouteBuilder hubRouteBuilder, Assembly assembly, string routePrefix = "/")
         {
             //Get SignalR Hubs

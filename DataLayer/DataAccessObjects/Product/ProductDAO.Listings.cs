@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-
-using Business.SearchFilters;
 using Dapper;
 
 namespace Data.AccessObjects.Product

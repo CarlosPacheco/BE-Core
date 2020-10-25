@@ -1,26 +1,21 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Reflection;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+using Application;
 using Application.ObjectMapping;
+using Autofac;
 using AutoMapper;
 using CrossCutting.Binders.TypeConverters;
 using CrossCutting.Configurations;
 using CrossCutting.IoC.Extensions;
 using CrossCutting.SearchFilters.DataAccess;
 using CrossCutting.Web.Extensions;
-using CrossCutting.Web.IoC.Extensions;
-using Dapper;
 using Data.Mapping.Dapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -33,10 +28,12 @@ namespace Api.Core
     public class Startup
     {
         public IConfiguration Configuration { get; }
+        public IWebHostEnvironment Environment { get; }
 
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
+            Environment = environment;
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -83,12 +80,17 @@ namespace Api.Core
             // Configure object mapping (AutoMapper), Get the assembly, AutoMapper will scan our assembly and look for classes that inherit from Profile
             services.AddAutoMapper(typeof(MappingProfile));
 
-            // IoC Dependency Injection
-            services.AddDependencyInjection(Assembly.Load("Application"), Assembly.Load("CrossCutting"), Assembly.Load("Business.LogicObjects"), Assembly.Load("Data.AccessObjects"));
-
             // new one per DI request
             services.AddTransient<IDbConnection>(db => new SqlConnection(Configuration.GetConnectionString("SqlServer")));
-            services.AddSingleton<IPagedQueryBuilder, PagedQueryBuilder>();
+        }
+
+        /// <summary>
+        /// Autofac Dependency Injection
+        /// </summary>
+        /// <param name="builder"></param>
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterModule(new DefaultApplicationModule(Environment.EnvironmentName == "Development", Configuration));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -17,9 +17,45 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\DataLayer\Data\Data.csproj" />
+    <ProjectReference Include="..\..\InfrastructureLayer\CrossCutting.Helpers\CrossCutting.Helpers.csproj" />
+    <ProjectReference Include="..\..\InfrastructureLayer\CrossCutting.SearchFilters\CrossCutting.SearchFilters.csproj" />
     <ProjectReference Include="..\..\InfrastructureLayer\CrossCutting\CrossCutting.csproj" />
-    <ProjectReference Include="..\BusinessEntities\Business.Entities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Enums\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Core\Data\BaseDao.PagedResultSet.cs">
+      <DependentUpon>BaseDao.PagedResultSet.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Interfaces\Data\AccessObjects\IProductDao.Listings.cs">
+      <DependentUpon>Product/IProductDao.cs</DependentUpon>
+    </Compile>
+    <Compile Update="LogicObjects\Product\IProductBlo.Listings.cs">
+      <DependentUpon>Product/IProductBlo.cs</DependentUpon>
+    </Compile>
+    <Compile Update="LogicObjects\Product\ProductBlo.Listings.cs">
+      <DependentUpon>Product/ProductBlo.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Core\Data\BaseDao.PagedResultSet.tt">
+      <LastGenOutput>BaseDao.PagedResultSet.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
 
 </Project>

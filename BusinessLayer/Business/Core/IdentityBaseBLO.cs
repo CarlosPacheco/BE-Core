@@ -2,7 +2,7 @@
 using System.Data;
 using System.Web;
 using CrossCutting.Security.Identity;
-using Data.Core;
+using Business.Core.Data;
 //using Microsoft.AspNet.Identity.Owin;
 //using Microsoft.AspNetCore.Http;
 

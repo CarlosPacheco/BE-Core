@@ -17,9 +17,6 @@
     <Compile Include="Multimedia/MultimediaDao.Querys.cs">
       <DependentUpon>Multimedia/MultimediaDao.cs</DependentUpon>
     </Compile>
-    <Compile Include="Product/IProductDao.Listings.cs">
-      <DependentUpon>Product/IProductDao.cs</DependentUpon>
-    </Compile>
     <Compile Include="Product/ProductDao.Listings.cs">
       <DependentUpon>Product/ProductDao.cs</DependentUpon>
     </Compile>
@@ -33,12 +30,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BusinessLayer\Business.SearchFilters\Business.SearchFilters.csproj" />
-    <ProjectReference Include="..\..\BusinessLayer\BusinessEntities\Business.Entities.csproj" />
-    <ProjectReference Include="..\..\BusinessLayer\BusinessValueObjects\Business.ValueObjects.csproj" />
+    <ProjectReference Include="..\..\BusinessLayer\Business\Business.csproj" />
     <ProjectReference Include="..\..\InfrastructureLayer\CrossCutting.Helpers\CrossCutting.Helpers.csproj" />
     <ProjectReference Include="..\..\InfrastructureLayer\CrossCutting\CrossCutting.csproj" />
-    <ProjectReference Include="..\Data\Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
+using Business.Core.Services;
 using Business.LogicObjects.Product;
-using Business.SearchFilters;
 using CrossCutting.Exceptions;
 using CrossCutting.Security.Identity;
-using CrossCutting.Web.Services;
 using Data.TransferObjects;
 using Microsoft.AspNetCore.Http;
 

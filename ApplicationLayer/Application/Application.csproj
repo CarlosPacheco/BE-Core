@@ -21,8 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BusinessLayer\BusinessLogicObjects\Business.LogicObjects.csproj" />
-    <ProjectReference Include="..\..\BusinessLayer\BusinessValueObjects\Business.ValueObjects.csproj" />
+    <ProjectReference Include="..\..\BusinessLayer\Business\Business.csproj" />
     <ProjectReference Include="..\..\InfrastructureLayer\CrossCutting.Web\CrossCutting.Web.csproj" />
     <ProjectReference Include="..\DataTransferObjects\Data.TransferObjects.csproj" />
   </ItemGroup>
