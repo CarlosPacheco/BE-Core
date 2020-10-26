@@ -27,7 +27,7 @@ namespace CrossCutting.Web.Extensions
         /// </summary>
         /// <param name="services"></param>
         /// <returns></returns>
-        public static IServiceCollection AddCorsPolicy(this IServiceCollection services, CorsConfig corsOptions)
+        public static IServiceCollection AddCorsPolicy(this IServiceCollection services, CorsOptions corsOptions)
         {
             services.AddCors(options =>
             {

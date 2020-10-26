@@ -1,7 +1,9 @@
 ﻿namespace CrossCutting.Configurations
 {
-    public class SwaggerOptionsConfig
+    public class SwaggerOptions
     {
+        public const string Key = "SwaggerOptions";
+
         public string JsonRoute { get; set; }
 
         public string EndpointName { get; set; }

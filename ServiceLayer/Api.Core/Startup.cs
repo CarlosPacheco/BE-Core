@@ -40,13 +40,19 @@ namespace Api.Core
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            SwaggerOptionsConfig swaggerOptionsConfig = new SwaggerOptionsConfig();
-            Configuration.GetSection("SwaggerOptions").Bind(swaggerOptionsConfig);
-            CorsConfig corsConfig = new CorsConfig();
-            Configuration.GetSection("Cors").Bind(corsConfig);
+            SwaggerOptions swaggerOptions = Configuration.GetSection(SwaggerOptions.Key).Get<SwaggerOptions>();
+            CorsOptions corsOptions = Configuration.GetSection(CorsOptions.Key).Get<CorsOptions>();
+
+            // Add functionality to inject IOptions<T>
+            services.AddOptions();
+
+            // Add our Config object so it can be injected
+            services.Configure<SwaggerOptions>(Configuration.GetSection(SwaggerOptions.Key));
+            services.Configure<UploadedOptions>(Configuration.GetSection(UploadedOptions.key));
+            services.Configure<CorsOptions>(Configuration.GetSection(CorsOptions.Key));
 
             // CORS Settings
-            services.AddCorsPolicy(corsConfig);
+            services.AddCorsPolicy(corsOptions);
 
             //load here other external dll controllers classes (before the AddMvc/Routing)
             //https://docs.microsoft.com/en-us/aspnet/core/fundamentals/routing?view=aspnetcore-2.2#use-routing-middleware
@@ -63,16 +69,8 @@ namespace Api.Core
             // Swagger UI
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc(swaggerOptionsConfig.Version, new OpenApiInfo { Title = swaggerOptionsConfig.Title, Version = swaggerOptionsConfig.Version });
+                c.SwaggerDoc(swaggerOptions.Version, new OpenApiInfo { Title = swaggerOptions.Title, Version = swaggerOptions.Version });
             });
-
-            // Add functionality to inject IOptions<T>
-            services.AddOptions();
-
-            // Add our Config object so it can be injected
-            services.Configure<SwaggerOptionsConfig>(Configuration.GetSection("SwaggerOptions"));
-            services.Configure<UploadedConfig>(Configuration.GetSection("Uploaded"));
-            services.Configure<CorsConfig>(Configuration.GetSection("Cors"));
 
             // IoC Logger 
             services.AddSerilog(Configuration); //Configuration.GetSection("Logging").GetValue<string>("FilePath"));
@@ -94,9 +92,9 @@ namespace Api.Core
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IMapper autoMapper, ILogger logger, IOptions<SwaggerOptionsConfig> swaggerOptionsConfig)
+        public void Configure(IApplicationBuilder app, IMapper autoMapper, ILogger logger, IOptions<SwaggerOptions> swaggerOptionsConfig)
         {
-            if (env.IsDevelopment())
+            if (Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }

@@ -12,12 +12,7 @@ namespace Data.Mapping.Dapper
         /// <summary>
         /// Name of the assembly containing the domain entities
         /// </summary>
-        private const string DomainEntitiesAssembly = "Business.Entities";
-
-        /// <summary>
-        /// Name of the assembly containing the domain value objects
-        /// </summary>
-        private const string DomainValueObjectsAssembly = "Business.ValueObjects";
+        private const string DomainEntitiesAssembly = "Business";
 
         /// <summary>
         /// Indicates if domain-entities/POCOs mappings are already setted up.
@@ -30,15 +25,6 @@ namespace Data.Mapping.Dapper
         /// </summary>
         /// <remarks>Dapper specific</remarks>
         private static bool _typeHandlersAdded;
-
-        /// <summary>
-        /// Static type constructor.
-        /// Runs mapping and handlers configuration on execution.
-        /// </summary>
-        static SqlTypeMapper()
-        {
-           // SetupTypesMappingAndHandlers();
-        }
 
         /// <summary>
         /// Sets all mappings and type handlers for Dapper and SqlServer interaction
@@ -84,7 +70,8 @@ namespace Data.Mapping.Dapper
             try
             {
                 Assembly.Load(DomainEntitiesAssembly).LoadSqlTypeMaps();
-                Assembly.Load(DomainValueObjectsAssembly).LoadSqlTypeMaps();
+                // TODO:: Create Data project and merge the projects AccessObject and Mapping
+                // Assembly.GetAssembly(typeof(IBaseEntity));
 
                 // Prevent setting mappings again.
                 _domainEntitiesTypesMapped = true;

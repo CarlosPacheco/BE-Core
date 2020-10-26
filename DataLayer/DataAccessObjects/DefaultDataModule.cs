@@ -2,6 +2,7 @@
 using Business.Core.Data.Interfaces;
 using CrossCutting.SearchFilters.DataAccess;
 using Microsoft.Extensions.Configuration;
+using System;
 
 namespace Data.AccessObjects
 {
@@ -10,10 +11,15 @@ namespace Data.AccessObjects
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
-    public class DefaultDataModule : Autofac.Module
+    public class DefaultDataModule : Module
     {
         private bool _isDevelopment;
         private readonly IConfiguration _configuration;
+
+        public DefaultDataModule()
+        {
+            _isDevelopment = !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("Development"));
+        }
 
         public DefaultDataModule(bool isDevelopment, IConfiguration configuration)
         {

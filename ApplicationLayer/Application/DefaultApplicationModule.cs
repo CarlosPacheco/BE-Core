@@ -1,8 +1,8 @@
 ﻿using Autofac;
-using Business.Core;
+using Business;
 using Business.Core.Services;
 using Microsoft.Extensions.Configuration;
-using System.Reflection;
+using System;
 
 namespace Application
 {
@@ -11,10 +11,15 @@ namespace Application
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
-    public class DefaultApplicationModule : Autofac.Module
+    public class DefaultApplicationModule : Module
     {
         private bool _isDevelopment;
         private readonly IConfiguration _configuration;
+
+        public DefaultApplicationModule()
+        {
+            _isDevelopment = !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("Development"));
+        }
 
         public DefaultApplicationModule(bool isDevelopment, IConfiguration configuration)
         {
@@ -38,7 +43,7 @@ namespace Application
         private void RegisterCommonDependencies(ContainerBuilder builder)
         {
             builder.RegisterAssemblyTypes(ThisAssembly).AsClosedTypesOf(typeof(IBaseService<>)).AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterAssemblyModules(Assembly.GetAssembly(typeof(IBaseBlo)));
+            builder.RegisterModule(new DefaultBusinessModule(_isDevelopment, _configuration));
         }
 
         private void RegisterDevelopmentOnlyDependencies(ContainerBuilder builder)

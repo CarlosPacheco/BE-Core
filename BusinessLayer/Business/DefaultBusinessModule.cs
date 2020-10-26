@@ -3,6 +3,7 @@ using Business.Core;
 using CrossCutting.Security.Identity;
 using Microsoft.Extensions.Configuration;
 using Serilog;
+using System;
 using System.Reflection;
 
 namespace Business
@@ -19,6 +20,11 @@ namespace Business
         private readonly IConfiguration _configuration;
 
         private const string DataAccessObjectsDdlName = "Data.AccessObjects";
+
+        public DefaultBusinessModule()
+        {
+            _isDevelopment = !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("Development"));
+        }
 
         public DefaultBusinessModule(bool isDevelopment, IConfiguration configuration)
         {

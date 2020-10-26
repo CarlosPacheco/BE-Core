@@ -1,7 +1,9 @@
 ﻿namespace CrossCutting.Configurations
 {
-    public class CorsConfig
+    public class CorsOptions
     {
+        public const string Key = "Cors";
+
         public string[] Origins { get; set; }
     }
 }
