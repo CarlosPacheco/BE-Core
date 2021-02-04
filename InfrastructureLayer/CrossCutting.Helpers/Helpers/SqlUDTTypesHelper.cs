@@ -6,6 +6,7 @@ using System.Linq;
 namespace CrossCutting.Helpers.Helpers
 {
     //TODO:: better solution -> check this Github: https://github.com/RasicN/Dapper-Parameters 
+    //https://stackoverflow.com/questions/56190787/can-dapper-pass-a-user-defined-composite-type-to-a-postgresql-function
     public static class SqlUdtTypesHelper
     {
         /// <summary>

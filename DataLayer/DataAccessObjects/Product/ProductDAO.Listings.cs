@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Dapper;
 
 namespace Data.AccessObjects.Product
@@ -16,8 +15,7 @@ namespace Data.AccessObjects.Product
             FROM Product CD
             INNER JOIN Loh L ON CD.IdLoh = L.Id";
 
-            return DbConnection.Query<Business.Entities.Product>(query).ToList();
+            return DbConnection.Query<Business.Entities.Product>(query).AsList();
         }
-
     }
 }

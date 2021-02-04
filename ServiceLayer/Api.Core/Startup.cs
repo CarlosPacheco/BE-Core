@@ -8,7 +8,6 @@ using CrossCutting.Binders.TypeConverters;
 using CrossCutting.Configurations;
 using CrossCutting.Extensions;
 using CrossCutting.Security;
-using CrossCutting.Security.Configurations;
 using CrossCutting.Security.EventsType;
 using CrossCutting.Web.Extensions;
 using CrossCutting.Web.JsonConverters;
@@ -59,7 +58,7 @@ namespace Api.Core
             services.AddMvc().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-                options.JsonSerializerOptions.Converters.Add(new SqlGeographyConverter());
+                options.JsonSerializerOptions.Converters.Add(new PointConverter());
 
                 options.JsonSerializerOptions.IgnoreNullValues = true;
                 options.JsonSerializerOptions.WriteIndented = true;

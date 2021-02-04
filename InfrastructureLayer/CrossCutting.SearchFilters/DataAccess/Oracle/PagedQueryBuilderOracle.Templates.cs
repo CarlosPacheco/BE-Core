@@ -1,4 +1,4 @@
-﻿namespace CrossCutting.SearchFilters.DataAccess
+﻿namespace CrossCutting.SearchFilters.DataAccess.Oracle
 {
     /// <summary>
     /// SQL Query build helper.

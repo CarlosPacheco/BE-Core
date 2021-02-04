@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Microsoft.SqlServer.Types;
+using NetTopologySuite.Geometries;
 
 namespace CrossCutting.Web.JsonConverters
 {
-    public class SqlGeographyConverter : JsonConverter<SqlGeography>
+    public class PointConverter : JsonConverter<Point>
     {
         private const int _defaultSRID = 4326;
 
-        public override SqlGeography Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override Point Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             if (reader.TokenType == JsonTokenType.Null)
             {
-                return SqlGeography.Null;
+                return Point.Empty;
             }
 
             double latitudeToken = 0;
@@ -49,33 +49,36 @@ namespace CrossCutting.Web.JsonConverters
                         break;
                 }
             }
-        
+
             if (latitudeToken <= 0 || longitudeToken <= 0)
             {
-                return SqlGeography.Null;
+                return Point.Empty;
             }
 
             int srid;
             srid = (sridToken <= 0) ? _defaultSRID : sridToken;
 
-            SqlGeography sqlGeography = SqlGeography.Point(latitudeToken, longitudeToken, srid);
-
-            return sqlGeography;
+            // use X for longitude and Y for latitude.
+            Point point = new Point(longitudeToken, latitudeToken)
+            {
+                SRID = srid
+            };
+            return point;
         }
 
-        public override void Write(Utf8JsonWriter writer, SqlGeography value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, Point value, JsonSerializerOptions options)
         {
 
-            if (value == null || value.IsNull)
+            if (value == null || value.IsEmpty)
             {
                 writer.WriteNullValue();
                 return;
             }
 
             writer.WriteStartObject();
-            writer.WriteNumber("latitude", (double)value.Lat);
-            writer.WriteNumber("longitude", (double)value.Long);
-            writer.WriteNumber("srid", (int)value.STSrid);
+            writer.WriteNumber("latitude", (double)value.Y);
+            writer.WriteNumber("longitude", (double)value.X);
+            writer.WriteNumber("srid", value.SRID);
             writer.WriteEndObject();
         }
 
@@ -88,8 +91,7 @@ namespace CrossCutting.Web.JsonConverters
         /// </returns>
         public override bool CanConvert(Type typeToConvert)
         {
-            return typeof(SqlGeography) == typeToConvert;
+            return typeof(Point) == typeToConvert;
         }
     }
-
 }

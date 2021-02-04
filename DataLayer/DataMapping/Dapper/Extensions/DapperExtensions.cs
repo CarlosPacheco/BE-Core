@@ -25,7 +25,7 @@ namespace Data.Mapping.Dapper.Extensions
         /// <returns>A list of <typeparamref name="TParent"/> objects with mapped children</returns>
         public static IEnumerable<TParent> QueryOneToMany<TParent, TChild, TKey>(this GridReader reader, Func<TParent, TKey> firstKey, Func<TChild, TKey> secondParentKey, Action<TParent, IEnumerable<TChild>> childSelector)
         {
-            List<TParent> first = reader.Read<TParent>().ToList();
+            List<TParent> first = reader.Read<TParent>().AsList();
             Dictionary<TKey, IEnumerable<TChild>> childMap = reader.Read<TChild>().GroupBy(secondParentKey).ToDictionary(g => g.Key, g => g.AsEnumerable());
 
             foreach (TParent item in first)

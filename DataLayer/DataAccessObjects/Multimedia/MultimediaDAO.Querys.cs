@@ -19,7 +19,7 @@ namespace Data.AccessObjects.MultimediaFiles
         private const string QueryGetByIdentifier = @"/* Content QueryGetByIdentifier */
            SELECT *
 	        FROM 
-	        WHERE Id = :id";
+	        WHERE Id = @id";
 
         private const string QueryUpdate = @"UPDATE ... SET ... WHERE ...";
 
@@ -36,6 +36,6 @@ namespace Data.AccessObjects.MultimediaFiles
 	        SELECT CAST(SCOPE_IDENTITY() as INT);
         ";
 
-        private const string QueryDelete = @"DELETE FROM WHERE Id = :Id";
+        private const string QueryDelete = @"DELETE FROM WHERE Id = @Id";
     }
 }

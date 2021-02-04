@@ -88,8 +88,7 @@ namespace Data.AccessObjects.Product
                     @Name, @UserName, @UserName
                 ) 
 
-                SELECT @@IDENTITY cast bigint
-";
+                RETURNING Id";
 
                 int newId = DbConnection.ExecuteScalar<int>
                 (

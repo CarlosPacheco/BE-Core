@@ -31,6 +31,4 @@ namespace Data.Mapping.Dapper.Oracle
             });
         }
     }
-
-  
 }

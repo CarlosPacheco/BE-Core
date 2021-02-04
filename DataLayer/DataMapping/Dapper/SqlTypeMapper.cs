@@ -2,6 +2,7 @@
 using System.Reflection;
 using Dapper;
 using Data.Mapping.Dapper.Extensions;
+using Npgsql;
 
 namespace Data.Mapping.Dapper
 {
@@ -48,8 +49,9 @@ namespace Data.Mapping.Dapper
                 return;
             }
 
+            NpgsqlConnection.GlobalTypeMapper.UseNetTopologySuite();
             // Running multiple times won't register multiple instances, so we're safe on multiple call scenarios
-            SqlMapper.AddTypeHandler(SqlGeographyHandler.Default);
+            SqlMapper.AddTypeHandler(GeometryHandler.Default);
 
             // Prevent setting type handlers again.
             _typeHandlersAdded = true;

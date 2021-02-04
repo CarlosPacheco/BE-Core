@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyModel;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Loader;
@@ -10,7 +11,7 @@ namespace CrossCutting.Web.Extensions
     {
         public static AppDomain LoadAllReferenceAssemblies(this AppDomain appDomain)
         {
-            var dlls = DependencyContext.Default.CompileLibraries
+            List<string> dlls = DependencyContext.Default.CompileLibraries
             .SelectMany(x => x.ResolveReferencePaths())
             .Distinct()
             .Where(x => x.Contains(Directory.GetCurrentDirectory()))

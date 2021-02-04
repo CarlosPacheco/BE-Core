@@ -7,6 +7,7 @@ using Business.SearchFilters;
 using CrossCutting.Exceptions;
 using CrossCutting.Helpers.Helpers;
 using CrossCutting.Security.Identity;
+using Dapper;
 //using CrossCutting.Web.Mime;
 using Data.AccessObjects;
 
@@ -81,7 +82,7 @@ namespace Business.LogicObjects.Product
                   Product.Id,
                   Product.Name,
                   LastUpdatedOn = Product.UpdatedOn?.ToString("dd/MM/yyyy hh:mm")
-              }).ToList<dynamic>();
+              }).AsList<dynamic>();
 
             //if (mediaTypeName == MediaType.Application.Csv)
             //{

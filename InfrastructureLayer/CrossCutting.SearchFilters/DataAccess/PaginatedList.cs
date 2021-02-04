@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dapper;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -45,12 +46,12 @@ namespace CrossCutting.SearchFilters.DataAccess
         }
 
         public PaginatedList(IEnumerable<T> enumerable, ISearchFilter filter, int? totalCount = null)
-            : this(enumerable.ToList(), filter, totalCount)
+            : this(enumerable.AsList(), filter, totalCount)
         {
         }
 
         public PaginatedList(IEnumerable<T> enumerable, int page, int pageSize, int? totalCount = null)
-            : this(enumerable.ToList(), page, pageSize, totalCount)
+            : this(enumerable.AsList(), page, pageSize, totalCount)
         {
         }
 

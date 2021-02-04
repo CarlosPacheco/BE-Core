@@ -1,12 +1,12 @@
 ﻿using Autofac;
 using Business.Core.Data.Interfaces;
 using CrossCutting.SearchFilters.DataAccess;
+using CrossCutting.SearchFilters.DataAccess.Npgsql;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Npgsql;
 using System;
 using System.Data;
-using System.Data.SqlClient;
 
 namespace Data.AccessObjects
 {
@@ -48,7 +48,7 @@ namespace Data.AccessObjects
         {
             builder.RegisterAssemblyTypes(ThisAssembly).As<IBaseDao>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.Register(db => new NpgsqlConnection(_configuration.GetConnectionString("PostgreSQL"))).As<IDbConnection>().InstancePerLifetimeScope();
-            builder.RegisterType<PagedQueryBuilderSqlServer>().As<IPagedQueryBuilder>().SingleInstance();
+            builder.RegisterType<PagedQueryBuilder>().As<IPagedQueryBuilder>().SingleInstance();
         }
 
         private void RegisterDevelopmentOnlyDependencies(ContainerBuilder builder)

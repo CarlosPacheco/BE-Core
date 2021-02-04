@@ -1,4 +1,4 @@
-﻿namespace CrossCutting.SearchFilters.DataAccess
+﻿namespace CrossCutting.SearchFilters.DataAccess.SqlServer
 {
     /// <summary>
     /// SQL Query build helper.

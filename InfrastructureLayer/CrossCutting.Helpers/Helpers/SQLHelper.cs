@@ -1,5 +1,4 @@
-﻿using Microsoft.SqlServer.Types;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
@@ -28,40 +27,6 @@ namespace CrossCutting.Helpers.Helpers
         }
 
         #region Parameters Handling
-
-        /// <summary>
-        /// Creates a new parameter of Geography SQL Type.
-        /// </summary>
-        /// <param name="parameterName">The SQL parameter name.</param>
-        /// <param name="latitude">The Point latitude.</param>
-        /// <param name="longitude">The Point longitude.</param>
-        /// <param name="srid">The SRID that should be defined.</param>
-        /// <returns>A new SqlParameter of Geography type.</returns>
-        public static SqlParameter GeographyPointParameter(string parameterName, double latitude, double longitude, int srid = 4326)
-        {
-            if (string.IsNullOrWhiteSpace(parameterName))
-            {
-                throw new ArgumentException("parameterName is null or empty");
-            }
-
-            SqlGeography sqlGeography;
-            try
-            {
-                sqlGeography = SqlGeography.Point(latitude, longitude, srid);
-            }
-            catch (Exception)
-            {
-                throw new ApplicationException(string.Format("Invalid geographic coordinates (Lat: {0} / Long: {1})", latitude, longitude));
-            }
-
-            parameterName = GetCorrectedParameterName(parameterName);
-
-            SqlParameter geoPointParam = new SqlParameter(parameterName, SqlDbType.Udt);
-            geoPointParam.UdtTypeName = "geography";
-            geoPointParam.Value = sqlGeography;
-
-            return geoPointParam;
-        }
 
         /// <summary>
         /// Creates a new SqlParameter with Output as it's ParameterDirection.

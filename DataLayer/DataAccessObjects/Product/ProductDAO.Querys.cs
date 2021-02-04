@@ -42,17 +42,17 @@ namespace Data.AccessObjects.Product
 
             if (!string.IsNullOrWhiteSpace(filter.Name))
             {
-                sqlBuilder.Where("CDG.Name LIKE :Name", new { Name = $"%{filter.Name}%" });
+                sqlBuilder.Where("CDG.Name LIKE @Name", new { Name = $"%{filter.Name}%" });
             }
 
             if (filter.UpdatedOnStart.HasValue)
             {
-                sqlBuilder.Where("CD.UpdatedOn >= TO_TIMESTAMP(:UpdatedOnStart, 'YYYY-MM-DD HH24:MI:SS.FF')", new { UpdatedOnStart = $"{filter.UpdatedOnStart.Value.ToString("yyyy-MM-dd HH:mm:ss.fff")}" });
+                sqlBuilder.Where("CD.UpdatedOn >= @UpdatedOnStart", new { filter.UpdatedOnStart });
             }
 
             if (filter.UpdatedOnEnd.HasValue)
             {
-                sqlBuilder.Where("CD.UpdatedOn <= TO_TIMESTAMP(:UpdatedOnEnd, 'YYYY-MM-DD HH24:MI:SS.FF')", new { UpdatedOnEnd = $"{filter.UpdatedOnEnd.Value.ToString("yyyy-MM-dd HH:mm:ss.fff")}"});
+                sqlBuilder.Where("CD.UpdatedOn <= @UpdatedOnEnd", new { filter.UpdatedOnEnd });
             }
 
             // Return all parameters to be reused (passed to Dapper exec/query method)

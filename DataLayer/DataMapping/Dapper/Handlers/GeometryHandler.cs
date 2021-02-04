@@ -1,38 +1,40 @@
-﻿using Microsoft.SqlServer.Types;
-using System;
+﻿using System;
 using System.Data;
-using System.Data.SqlClient;
 using Dapper;
+using NetTopologySuite.Geometries;
+using Npgsql;
+using NpgsqlTypes;
 
 namespace Data.Mapping.Dapper
 {
     /// <summary>
     /// Type-handler for the SqlGeography spatial type
     /// </summary>
-    public class SqlGeographyHandler : SqlMapper.TypeHandler<SqlGeography>
+    public class GeometryHandler : SqlMapper.TypeHandler<Geometry>
     {
         /// <summary>
         /// Create a new handler instance
         /// </summary>
-        protected SqlGeographyHandler() { }
+        protected GeometryHandler() { }
 
         /// <summary>
         /// Default handler instance
         /// </summary>
-        public static readonly SqlGeographyHandler Default = new SqlGeographyHandler();
+        public static readonly GeometryHandler Default = new GeometryHandler();
 
         /// <summary>
         /// Assign the value of a parameter before a command executes
         /// </summary>
         /// <param name="parameter">The parameter to configure</param>
         /// <param name="value">Parameter value</param>
-        public override void SetValue(IDbDataParameter parameter, SqlGeography value)
+        public override void SetValue(IDbDataParameter parameter, Geometry value)
         {
             parameter.Value = (object)value ?? DBNull.Value;
 
-            if (parameter is SqlParameter sqlParameter)
+            if (parameter is NpgsqlParameter npgsqlParameter)
             {
-                sqlParameter.UdtTypeName = "geography";
+                npgsqlParameter.NpgsqlDbType = NpgsqlDbType.Geography;
+                npgsqlParameter.NpgsqlValue = value;
             }
         }
 
@@ -41,9 +43,9 @@ namespace Data.Mapping.Dapper
         /// </summary>
         /// <param name="value">The value from the database</param>
         /// <returns>The typed value</returns>
-        public override SqlGeography Parse(object value)
+        public override Geometry Parse(object value)
         {
-            return value == null || value is DBNull ? null : (SqlGeography) value;
+            return value == null || value is DBNull ? null : (Geometry)value;
         }
     }
 }
