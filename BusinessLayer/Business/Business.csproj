@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\InfrastructureLayer\CrossCutting.Helpers\CrossCutting.Helpers.csproj" />
     <ProjectReference Include="..\..\InfrastructureLayer\CrossCutting.SearchFilters\CrossCutting.SearchFilters.csproj" />
+    <ProjectReference Include="..\..\InfrastructureLayer\CrossCutting.Security\CrossCutting.Security.csproj" />
     <ProjectReference Include="..\..\InfrastructureLayer\CrossCutting\CrossCutting.csproj" />
   </ItemGroup>
 
@@ -27,7 +28,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="6.0.0" />
+    <PackageReference Include="Autofac" Version="6.1.0" />
+    <PackageReference Include="dotMorten.Microsoft.SqlServer.Types" Version="1.3.0" />
   </ItemGroup>
 
   <ItemGroup>

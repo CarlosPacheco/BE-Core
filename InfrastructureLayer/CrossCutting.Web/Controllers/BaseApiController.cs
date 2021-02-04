@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using CrossCutting.Web.ContentResponses;
+using CrossCutting.Web.ActionResults;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 
@@ -17,12 +17,11 @@ namespace CrossCutting.Web.Controllers
         /// </summary>
         protected readonly ILogger Logger;
 
-        ///// <summary>
-        ///// Security Principal for authentication and authorization information access
-        ///// </summary>
-        //protected TIdentityProvider IdentityProvider;
-        
-        public BaseApiController(ILogger logger) {
+        /// <summary>
+        /// Security Principal for authentication and authorization information access
+        /// </summary>
+        public BaseApiController(ILogger logger)
+        {
             Logger = logger;
         }
 
@@ -35,6 +34,15 @@ namespace CrossCutting.Web.Controllers
         protected PagedDataResponse<T> PagedData<T>(IEnumerable<T> content)
         {
             return new PagedDataResponse<T>(content);
+        }
+
+        /// <summary>
+        /// Creates a negotiated content result (501 Not Implemented) for NotImplementedResult.
+        /// </summary>
+        /// <returns>A negotiated content result with the specified values.</returns>
+        protected NotImplementedResult NotImplemented()
+        {
+            return new NotImplementedResult();
         }
     }
 }

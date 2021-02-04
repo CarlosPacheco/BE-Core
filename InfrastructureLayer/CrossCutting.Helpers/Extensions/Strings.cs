@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace CrossCutting.Helpers.Extensions
@@ -245,6 +247,19 @@ namespace CrossCutting.Helpers.Extensions
         public static string RemoveMultipleSpaces(this string value)
         {
             return MultipleSpaces.Replace(value, " ");
+        }
+
+        public static string GetFileName(this string value)
+        {
+            return string.IsNullOrWhiteSpace(value) ? null : Path.GetFileName(value);
+        }
+
+        public static string CombineAsURL(this string baseURL, params string[] segments)
+        {
+            {
+                return string.Join("/", new[] { baseURL.TrimEnd('/') }
+                    .Concat(segments.Select(s => s.Trim('/'))));
+            }
         }
 
         #endregion

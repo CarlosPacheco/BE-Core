@@ -1,4 +1,4 @@
-﻿using Business.Entities;
+﻿using Business.Core.Entities;
 using CrossCutting.SearchFilters;
 using CrossCutting.SearchFilters.DataAccess;
 
@@ -43,7 +43,7 @@ namespace Business.Core.Interfaces
         /// <param name="filter">Filter and ordering description object</param>
         /// <param name="languageIdentifier">Identifier for the language in which the content should be returned</param>
         /// <returns>An ordered list of <see cref="TEntity"/></returns>
-        IPagedList<TEntity> Get(TSearchFilter filter, int languageIdentifier);
+        IPaginatedList<TEntity> Get(TSearchFilter filter, int languageIdentifier);
 
         /// <summary>
         /// Gets a <see cref="TEntity"/> instance by it's unique identifier

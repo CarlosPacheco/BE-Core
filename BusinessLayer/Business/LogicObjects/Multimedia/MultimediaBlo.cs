@@ -14,14 +14,14 @@ namespace Business.LogicObjects.MultimediaFiles
     {
         public IConfiguration Configuration { get; private set; }
 
-        private readonly IOptions<UploadedOptions> Config;
+        private readonly IOptions<UploadedConfig> Config;
 
         /// <summary>
         /// Initializes a new instance of <see cref="MultimediaBlo"/> (Business Controller)
         /// </summary>
         /// <param name="authorization">Security information access object to be used by this instance</param>
         /// <param name="dataAccess">Application Request's data access object to be used by this instance</param>
-        public MultimediaBlo(IMultimediaDao dataAccess, IAuthorization authorization, IConfiguration configuration, IOptions<UploadedOptions> config) : base(dataAccess, authorization)
+        public MultimediaBlo(IMultimediaDao dataAccess, IAuthorization authorization, IConfiguration configuration, IOptions<UploadedConfig> config) : base(dataAccess, authorization)
         {
             Configuration = configuration;
             Config = config;

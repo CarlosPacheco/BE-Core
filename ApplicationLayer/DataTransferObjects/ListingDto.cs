@@ -1,6 +1,9 @@
-﻿namespace Data.TransferObjects
+﻿using Business.Entities;
+using Data.TransferObjects.ObjectMapping.Mappings;
+
+namespace Data.TransferObjects
 {
-    public class ListingDto
+    public class ListingDto : MapFrom<Product>
     {
         /// <summary>
         /// Unique identifier.

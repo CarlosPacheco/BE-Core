@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,11 +17,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="10.0.0" />
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\BusinessLayer\Business\Business.csproj" />
+    <ProjectReference Include="..\..\DataLayer\DataAccessObjects\Data.AccessObjects.csproj" />
     <ProjectReference Include="..\..\InfrastructureLayer\CrossCutting.Web\CrossCutting.Web.csproj" />
     <ProjectReference Include="..\DataTransferObjects\Data.TransferObjects.csproj" />
   </ItemGroup>

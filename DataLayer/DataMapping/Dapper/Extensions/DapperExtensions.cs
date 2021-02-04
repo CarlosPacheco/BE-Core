@@ -15,31 +15,50 @@ namespace Data.Mapping.Dapper.Extensions
         /// One to many (1 -> *) multi-map.
         /// Load a list of children to a parent's property.
         /// </summary>
-        /// <typeparam name="TFirst">Parent data type</typeparam>
-        /// <typeparam name="TSecond">Children data type</typeparam>
+        /// <typeparam name="TParent">Parent data type</typeparam>
+        /// <typeparam name="TChild">Children data type</typeparam>
         /// <typeparam name="TKey">Keys data type</typeparam>
-        /// <param name="reader"><see cref="SqlMapper.GridReader"/> instance</param>
+        /// <param name="reader"><see cref="GridReader"/> instance</param>
         /// <param name="firstKey">Parent key get Func</param>
-        /// <param name="secondKey">Child key get Func</param>
-        /// <param name="addChildren">Child list manipulation Action</param>
-        /// <returns>A list of <typeparamref name="TFirst"/> objects with mapped children</returns>
-        public static IEnumerable<TFirst> Map<TFirst, TSecond, TKey>(this SqlMapper.GridReader reader, Func<TFirst, TKey> firstKey, Func<TSecond, TKey> secondKey, Action<TFirst, IEnumerable<TSecond>> addChildren)
+        /// <param name="secondParentKey">Child key get Func</param>
+        /// <param name="childSelector">Child list manipulation Action</param>
+        /// <returns>A list of <typeparamref name="TParent"/> objects with mapped children</returns>
+        public static IEnumerable<TParent> QueryOneToMany<TParent, TChild, TKey>(this GridReader reader, Func<TParent, TKey> firstKey, Func<TChild, TKey> secondParentKey, Action<TParent, IEnumerable<TChild>> childSelector)
         {
-            List<TFirst> first = reader.Read<TFirst>().ToList();
-            Dictionary<TKey, IEnumerable<TSecond>> childMap = reader
-                .Read<TSecond>()
-                .GroupBy(secondKey)
-                .ToDictionary(g => g.Key, g => g.AsEnumerable());
+            List<TParent> first = reader.Read<TParent>().ToList();
+            Dictionary<TKey, IEnumerable<TChild>> childMap = reader.Read<TChild>().GroupBy(secondParentKey).ToDictionary(g => g.Key, g => g.AsEnumerable());
 
-            foreach (TFirst item in first)
+            foreach (TParent item in first)
             {
-                if (childMap.TryGetValue(firstKey(item), out IEnumerable<TSecond> children))
+                if (childMap.TryGetValue(firstKey(item), out IEnumerable<TChild> children))
                 {
-                    addChildren(item, children);
+                    childSelector(item, children);
                 }
             }
 
             return first;
+        }
+
+        public static IEnumerable<TParent> QueryParentChild<TParent, TChild, TParentKey>(this IDbConnection connection, string sql, Func<TParent, TParentKey> parentKeySelector, Func<TParent, IList<TChild>> childSelector, object param = null, IDbTransaction transaction = null, bool buffered = true, string splitOn = "Id", int? commandTimeout = null, CommandType? commandType = null)
+        {
+            Dictionary<TParentKey, TParent> cache = new Dictionary<TParentKey, TParent>();
+
+            connection.Query<TParent, TChild, TParent>(sql,
+                (parent, child) =>
+                {
+                    if (!cache.ContainsKey(parentKeySelector(parent)))
+                    {
+                        cache.Add(parentKeySelector(parent), parent);
+                    }
+
+                    TParent cachedParent = cache[parentKeySelector(parent)];
+                    IList<TChild> children = childSelector(cachedParent);
+                    children.Add(child);
+                    return cachedParent;
+                },
+                param, transaction, buffered, splitOn, commandTimeout, commandType);
+
+            return cache.Values;
         }
 
         /// <summary>

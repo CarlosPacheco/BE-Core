@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,15 +17,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.0.35" />
-    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="2.19.90" />
+    <PackageReference Include="Dapper" Version="2.0.78" />
+    <PackageReference Include="dotMorten.Microsoft.SqlServer.Types" Version="1.3.0" />
+    <PackageReference Include="NetTopologySuite" Version="2.1.0" />
+    <PackageReference Include="NetTopologySuite.IO.SqlServerBytes" Version="2.0.0" />
+    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="2.19.101" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Dapper\GridReaderExtension.tt">
+    <None Update="Dapper\Extensions\GridReaderExtension.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>GridReaderExtension.cs</LastGenOutput>
+      <LastGenOutput>GridReaderExtension.cs</LastGenOutput>     
+    </None>
+    <None Update="Dapper\Extensions\IDbConnectionExtension.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IDbConnectionExtension.cs</LastGenOutput>
     </None>
   </ItemGroup>
 
@@ -34,10 +41,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Dapper\GridReaderExtension.cs">
+    <Compile Update="Dapper\Extensions\GridReaderExtension.cs">
+      <DependentUpon>GridReaderExtension.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>GridReaderExtension.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Dapper\Extensions\IDbConnectionExtension.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IDbConnectionExtension.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 

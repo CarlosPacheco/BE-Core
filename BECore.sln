@@ -41,6 +41,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.TransferObjects", "App
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.Mapping", "DataLayer\DataMapping\Data.Mapping.csproj", "{99FF1EF8-2DF5-4FD4-8A09-9FEF0E44138C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrossCutting.Security", "InfrastructureLayer\CrossCutting.Security\CrossCutting.Security.csproj", "{CA71BF1B-D5BE-400B-9A67-77B0A2185C2D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -120,6 +122,12 @@ Global
 		{99FF1EF8-2DF5-4FD4-8A09-9FEF0E44138C}.QA|Any CPU.Build.0 = QA|Any CPU
 		{99FF1EF8-2DF5-4FD4-8A09-9FEF0E44138C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99FF1EF8-2DF5-4FD4-8A09-9FEF0E44138C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA71BF1B-D5BE-400B-9A67-77B0A2185C2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA71BF1B-D5BE-400B-9A67-77B0A2185C2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA71BF1B-D5BE-400B-9A67-77B0A2185C2D}.QA|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA71BF1B-D5BE-400B-9A67-77B0A2185C2D}.QA|Any CPU.Build.0 = Debug|Any CPU
+		{CA71BF1B-D5BE-400B-9A67-77B0A2185C2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA71BF1B-D5BE-400B-9A67-77B0A2185C2D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -137,6 +145,7 @@ Global
 		{80F6B2D1-9EFF-45F6-AC3A-5AD824FAFBAE} = {4944D964-A037-4288-B216-DED526B1F837}
 		{D77DDFFF-5EFC-4161-917A-F36A6462DE15} = {09D0E130-A498-4D5C-BD53-076932510B53}
 		{99FF1EF8-2DF5-4FD4-8A09-9FEF0E44138C} = {FFD19FF5-4337-4797-AACE-5992DDD13FE6}
+		{CA71BF1B-D5BE-400B-9A67-77B0A2185C2D} = {535C7D88-9BA1-43C1-967E-5CEBD43E45D9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A9DFEF16-3AA7-42D8-A0A9-9A75AEA34672}

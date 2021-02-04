@@ -1,0 +1,197 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+
+/*
+ * This file is auto-generated, do not edit.
+ */
+
+using System;
+using Dapper;
+using System.Collections.Generic;
+using System.Data;
+using Data.Mapping.Dapper.Extensions;
+
+namespace Data.Mapping.Dapper.Extensions
+{
+
+	public static class IDbConnectionExtension
+	{
+        /// <summary>
+        /// Many to many (N -> *) multi-map.
+        /// Load a list of children to a parent's property.
+        /// Example:
+        /// SELECT * From TableParent
+        /// 
+        /// SELECT Parent.ID AS ParentId, TC.* FROM TableChild TC 
+        /// INNER JOIN 
+        /// ( 
+        ///     SELECT ID From TableParent
+        /// ) Parent ON Parent.ID = TC.ParentID
+        /// 
+        /// </summary>
+        /// <typeparam name="TParent">Parent data type</typeparam>
+        /// <typeparam name="TChild">Children data type</typeparam>
+        /// <typeparam name="TKey">Keys data type</typeparam>
+        /// <param name="cnn"><see cref="IDbConnection"/> instance</param>
+        /// <param name="parentKeySelector">Parent key get Func</param>
+        /// <param name="childSelector">Child list manipulation Action</param>
+        /// <returns>A list of <typeparamref name="TParent"/> objects with mapped children</returns>
+        public static IList<TParentReturn> Query<TParentReturn, TChild, TKey>(this IDbConnection cnn, string sql, Type[] typesParent, Func<object[], TParentReturn> mapParent, Type[] typesChild,
+            Func<TParentReturn, TKey> parentKeySelector, Action<TParentReturn, IList<TChild>> funcParent, Func<object[], TChild> mapChild,
+            object param = null, IDbTransaction transaction = null, string splitOn = "Id", bool buffered = true, int? commandTimeout = null, CommandType? commandType = null)
+        {
+            SqlMapper.GridReader reader = cnn.QueryMultiple(sql, param, transaction, commandTimeout, commandType);
+
+            IList<TParentReturn> first = (IList<TParentReturn>)reader.Read(typesParent, mapParent, splitOn, buffered);
+
+            Dictionary<TKey, IList<TChild>> childMap = reader.ReadChild<TKey, TChild>(typesChild, mapChild, splitOn, buffered);
+
+            foreach (TParentReturn item in first)
+            {
+                if (childMap.TryGetValue(parentKeySelector(item), out IList<TChild> children))
+                {
+                    funcParent(item, children);
+                }
+            }
+
+            return first;
+        }
+
+        /// <summary>
+        /// Many to many (N -> *) multi-map.
+        /// Load a list of children to a parent's property.
+        /// Example:
+        /// SELECT * From TableParent
+        /// 
+        /// SELECT Parent.ID AS ParentId, TC.* FROM TableChild TC 
+        /// INNER JOIN 
+        /// ( 
+        ///     SELECT ID From TableParent
+        /// ) Parent ON Parent.ID = TC.ParentID
+        /// 
+        /// </summary>
+        /// <typeparam name="TParent">Parent data type</typeparam>
+        /// <typeparam name="TChild">Children data type</typeparam>
+        /// <typeparam name="TKey">Keys data type</typeparam>
+        /// <param name="reader"><see cref="GridReader"/> instance</param>
+        /// <param name="parentKeySelector">Parent key get Func</param>
+        /// <param name="childSelector">Child list manipulation Action</param>
+        /// <returns>A list of <typeparamref name="TParent"/> objects with mapped children</returns>
+        public static IList<TParentReturn> Query<TParentReturn, TChild, TKey>(this IDbConnection cnn, string sql, Func<TParentReturn, TKey> parentKeySelector, Action<TParentReturn, IList<TChild>> funcParent, object param = null, IDbTransaction transaction = null, string splitOn = "Id", bool buffered = true, int? commandTimeout = null, CommandType? commandType = null)
+        {
+            SqlMapper.GridReader reader = cnn.QueryMultiple(sql, param, transaction, commandTimeout, commandType);
+
+            IList<TParentReturn> first = (IList<TParentReturn>)reader.Read<TParentReturn>(buffered);
+
+            Dictionary<TKey, IList<TChild>> childMap = reader.ReadChild<TKey, TChild>(splitOn, buffered);
+
+            foreach (TParentReturn item in first)
+            {
+                if (childMap.TryGetValue(parentKeySelector(item), out IList<TChild> children))
+                {
+                    funcParent(item, children);
+                }
+            }
+
+            return first;
+        }
+    <#
+     string typesParent = "";
+     string argsParent = "";
+     string typesChild = "";
+     string args = "";
+
+	for (int p = 0; p < 8; p++)
+	{
+        typesChild = "TChildT1";
+        args = "";
+        if(p == 1)
+        {
+             typesParent= ", TParentChildT"+ p;
+             argsParent+= ", parentChild"+ p;
+        }
+        if(p > 1)
+        {
+		    typesParent+= ", TParentChildT"+ p;
+            argsParent+= ", parentChild"+ p;
+        }
+	
+	for (int i = 2; i < 8; i++)
+	{
+		typesChild+= ", TChildT"+ i;
+        args+= ", arg"+ i;
+	#>	 
+        /// <summary>
+        /// Many to many (N -> *) multi-map.
+        /// Load a list of children to a parent's property.
+        /// Example:
+        /// SELECT * From TableParent
+        /// 
+        /// SELECT Parent.ID AS ParentId, TC.* FROM TableChild TC 
+        /// INNER JOIN 
+        /// ( 
+        ///     SELECT ID From TableParent
+        /// ) Parent ON Parent.ID = TC.ParentID
+        /// 
+        /// </summary>
+        /// <typeparam name="TParent">Parent data type</typeparam>
+        /// <typeparam name="TChild">Children data type</typeparam>
+        /// <typeparam name="TKey">Keys data type</typeparam>
+        /// <param name="cnn"><see cref="IDbConnection"/> instance</param>
+        /// <param name="parentKeySelector">Parent key get Func</param>
+        /// <param name="childSelector">Child list manipulation Action</param>
+        /// <returns>A list of <typeparamref name="TParentReturn"/> objects with mapped children</returns>
+        public static IList<TParentReturn> Query<TParentReturn<#= typesParent #>, <#= typesChild #>, TKey>(this IDbConnection cnn, string sql, Func<TParentReturn, TKey> parentKeySelector, Action<TParentReturn<#= typesParent #>, IList<TChildT1>> funcParent, Action<<#= typesChild #>> funcChild, object param = null, IDbTransaction transaction = null, string splitOn = "Id", bool buffered = true, int? commandTimeout = null, CommandType? commandType = null)
+        {
+            SqlMapper.GridReader reader = cnn.QueryMultiple(sql, param, transaction, commandTimeout, commandType);
+
+           <# if(p >= 1) {#> Type[] types = {
+                typeof(TParentReturn),
+                <# for (int j = 1; j <= p; j++)
+				    {
+					    PushIndent("				");
+					    if(j == p) {
+						    Write("typeof(TParentChildT"+ j +")"); 
+					    } else { 
+						    WriteLine("typeof(TParentChildT"+ j +"),");
+					    };
+					    ClearIndent(); 
+				    } #>        
+            };
+
+            IList<object[]> first = (IList<object[]>)reader.Read(types, objects => objects, splitOn, buffered);
+            IList<TParentReturn> results = new List<TParentReturn>();
+            <#}else{#> IList<TParentReturn> results = (IList<TParentReturn>)reader.Read<TParentReturn>();
+            <#}#>             
+            Dictionary<TKey, IList<TChildT1>> childMap = reader.ReadChild<<#= typesChild #>, TKey>(funcChild, splitOn, buffered);
+
+            foreach (<# if(p >= 1) {#>object[] row in first<#}else{#>TParentReturn parent in results<#}#>)
+            {
+<# if(p >= 1) {#> 
+                TParentReturn parent = (TParentReturn)row[0];
+                <# for (int j = 1; j <= p; j++){
+					    PushIndent("				");
+
+                        WriteLine("TParentChildT"+ j +" parentChild"+ j +" = (TParentChildT"+ j +")row["+ j +"];");
+					    ClearIndent(); } #> 
+<#}#>
+                if (childMap.TryGetValue(parentKeySelector(parent), out IList<TChildT1> children))
+                {
+                    funcParent(parent<#= argsParent #>, children);
+                    <# if(p >= 1){#>results.Add(parent);<#}#>        
+                }
+            }
+
+            return results;
+        }
+    <#
+    }
+	}
+	#>
+
+}
+}

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using Dapper;
 using Data.Mapping.Dapper.Extensions;
 
 namespace Data.Mapping.Dapper
@@ -48,7 +49,7 @@ namespace Data.Mapping.Dapper
             }
 
             // Running multiple times won't register multiple instances, so we're safe on multiple call scenarios
-           // SqlMapper.AddTypeHandler(SqlGeographyHandler.Default);
+            SqlMapper.AddTypeHandler(SqlGeographyHandler.Default);
 
             // Prevent setting type handlers again.
             _typeHandlersAdded = true;
@@ -70,8 +71,6 @@ namespace Data.Mapping.Dapper
             try
             {
                 Assembly.Load(DomainEntitiesAssembly).LoadSqlTypeMaps();
-                // TODO:: Create Data project and merge the projects AccessObject and Mapping
-                // Assembly.GetAssembly(typeof(IBaseEntity));
 
                 // Prevent setting mappings again.
                 _domainEntitiesTypesMapped = true;

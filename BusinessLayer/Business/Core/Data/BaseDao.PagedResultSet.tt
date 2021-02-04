@@ -17,6 +17,28 @@ namespace Business.Core.Data
 {
 	public partial class BaseDao
 	{
+		/// <summary>
+        /// Get PagedResultSet from a execute query with not nested object with/without TotalCount using the IncludeMetada
+        /// </summary>
+        /// <param name="fullSqlQuery">Sql Query to execute</param>
+        /// <param name="filter">The SearchFilter </param>
+        /// <param name="param">Parameters to blind with the sql query</param>
+		/// <param name="buffered"></param>
+        /// <returns></returns>
+		public IPaginatedList<TReturn> ExecutePagedQuery<TReturn>(Type[] types, Func<object[], TReturn> map, string fullSqlQuery, ISearchFilter filter, object param = null, string splitOn = "id", bool buffered = true)
+        {
+			// Paging construct helper
+            string sqlGetQuery = PagedQueryBuilder.PagedQuery(fullSqlQuery, filter, ref param);
+
+            SqlMapper.GridReader reader = DbConnection.QueryMultiple(sqlGetQuery, param, CurrentTransaction);
+
+            IList<TReturn> entity = (IList<TReturn>)reader.Read(types, map, splitOn, buffered);
+
+			int? totalCount = filter.IncludeMetadata ? reader.ReadSingleOrDefault<int?>() : null;
+
+			return new PaginatedList<TReturn>(entity, filter, totalCount);
+        }	  
+
 	    /// <summary>
         /// Get PagedResultSet from a execute query with not nested object with/without TotalCount using the IncludeMetada
         /// </summary>
@@ -25,7 +47,7 @@ namespace Business.Core.Data
         /// <param name="param">Parameters to blind with the sql query</param>
 		/// <param name="buffered"></param>
         /// <returns></returns>
-        public IPagedList<TReturn> ExecutePagedQuery<TReturn>(string fullSqlQuery, ISearchFilter filter, object param = null, bool buffered = true)
+        public IPaginatedList<TReturn> ExecutePagedQuery<TReturn>(string fullSqlQuery, ISearchFilter filter, object param = null, bool buffered = true)
         {
             // Paging construct helper
             string sqlGetQuery = PagedQueryBuilder.PagedQuery(fullSqlQuery, filter, ref param);
@@ -35,7 +57,7 @@ namespace Business.Core.Data
             IEnumerable<TReturn> entity = reader.Read<TReturn>(buffered);
             int? totalCount = filter.IncludeMetadata ? reader.ReadSingleOrDefault<int?>() : null;
 
-            return new PagedList<TReturn>(entity, filter, totalCount);
+            return new PaginatedList<TReturn>(entity, filter, totalCount);
         }
 	<#
 	  string types = "T1, ";
@@ -43,7 +65,15 @@ namespace Business.Core.Data
 	{
 		types+= "T"+ i +", ";
 	#>	 
-	    public IPagedList<TReturn> ExecutePagedQuery<<#= types #>TReturn>(Func<<#= types #>TReturn> func, string fullSqlQuery, ISearchFilter filter, object param = null, string splitOn = "id", bool buffered = true)
+		/// <summary>
+        /// Get PagedResultSet from a execute query with not nested object with/without TotalCount using the IncludeMetada
+        /// </summary>
+        /// <param name="fullSqlQuery">Sql Query to execute</param>
+        /// <param name="filter">The SearchFilter </param>
+        /// <param name="param">Parameters to blind with the sql query</param>
+		/// <param name="buffered"></param>
+        /// <returns></returns>
+	    public IPaginatedList<TReturn> ExecutePagedQuery<<#= types #>TReturn>(Func<<#= types #>TReturn> func, string fullSqlQuery, ISearchFilter filter, object param = null, string splitOn = "id", bool buffered = true)
         {
 			// Paging construct helper
             string sqlGetQuery = PagedQueryBuilder.PagedQuery(fullSqlQuery, filter, ref param);
@@ -77,7 +107,7 @@ namespace Business.Core.Data
 
 			int? totalCount = filter.IncludeMetadata ? reader.ReadSingleOrDefault<int?>() : null;
 
-			return new PagedList<TReturn>(entity, filter, totalCount);
+			return new PaginatedList<TReturn>(entity, filter, totalCount);
         }	  
 	<#
 	}

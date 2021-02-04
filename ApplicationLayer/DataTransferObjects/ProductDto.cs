@@ -1,11 +1,13 @@
 ﻿using System;
+using Business.Entities;
 using CrossCutting.Web.Binders;
+using Data.TransferObjects.ObjectMapping.Mappings;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Data.TransferObjects
 {
     [ModelBinder(typeof(JsonFormDataModelBinder))]
-    public class ProductDto
+    public class ProductDto : MapFrom<Product>
     {
         /// <summary>
         /// Unique identifier

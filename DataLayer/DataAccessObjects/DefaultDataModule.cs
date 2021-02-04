@@ -2,7 +2,11 @@
 using Business.Core.Data.Interfaces;
 using CrossCutting.SearchFilters.DataAccess;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Npgsql;
 using System;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace Data.AccessObjects
 {
@@ -18,7 +22,7 @@ namespace Data.AccessObjects
 
         public DefaultDataModule()
         {
-            _isDevelopment = !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("Development"));
+            _isDevelopment = !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable(Environments.Development));
         }
 
         public DefaultDataModule(bool isDevelopment, IConfiguration configuration)
@@ -43,7 +47,8 @@ namespace Data.AccessObjects
         private void RegisterCommonDependencies(ContainerBuilder builder)
         {
             builder.RegisterAssemblyTypes(ThisAssembly).As<IBaseDao>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<PagedQueryBuilder>().As<IPagedQueryBuilder>().SingleInstance();
+            builder.Register(db => new NpgsqlConnection(_configuration.GetConnectionString("PostgreSQL"))).As<IDbConnection>().InstancePerLifetimeScope();
+            builder.RegisterType<PagedQueryBuilderSqlServer>().As<IPagedQueryBuilder>().SingleInstance();
         }
 
         private void RegisterDevelopmentOnlyDependencies(ContainerBuilder builder)

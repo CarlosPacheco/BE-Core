@@ -1,19 +1,19 @@
 using System;
 using System.ComponentModel;
-using System.Data;
-using System.Data.SqlClient;
-using System.Reflection;
 using System.Text.Json.Serialization;
 using Application;
-using Application.ObjectMapping;
 using Autofac;
 using AutoMapper;
 using CrossCutting.Binders.TypeConverters;
 using CrossCutting.Configurations;
-using CrossCutting.IoC.Extensions;
-using CrossCutting.SearchFilters.DataAccess;
+using CrossCutting.Extensions;
+using CrossCutting.Security;
+using CrossCutting.Security.Configurations;
+using CrossCutting.Security.EventsType;
 using CrossCutting.Web.Extensions;
+using CrossCutting.Web.JsonConverters;
 using Data.Mapping.Dapper;
+using Data.TransferObjects.ObjectMapping.Mappings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -21,7 +21,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
-using Serilog;
 
 namespace Api.Core
 {
@@ -40,46 +39,39 @@ namespace Api.Core
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            SwaggerOptions swaggerOptions = Configuration.GetSection(SwaggerOptions.Key).Get<SwaggerOptions>();
-            CorsOptions corsOptions = Configuration.GetSection(CorsOptions.Key).Get<CorsOptions>();
+            SwaggerOptionsConfig swaggerOptionsConfig = Configuration.GetSection(SwaggerOptionsConfig.Position).Get<SwaggerOptionsConfig>();
+            CorsConfig corsConfig = Configuration.GetSection(CorsConfig.Position).Get<CorsConfig>();
 
             // Add functionality to inject IOptions<T>
             services.AddOptions();
 
             // Add our Config object so it can be injected
-            services.Configure<SwaggerOptions>(Configuration.GetSection(SwaggerOptions.Key));
-            services.Configure<UploadedOptions>(Configuration.GetSection(UploadedOptions.key));
-            services.Configure<CorsOptions>(Configuration.GetSection(CorsOptions.Key));
+            services.Configure<SwaggerOptionsConfig>(Configuration.GetSection(SwaggerOptionsConfig.Position))
+            .Configure<UploadedConfig>(Configuration.GetSection(UploadedConfig.Position))
+            .Configure<CorsConfig>(Configuration.GetSection(CorsConfig.Position));
 
             // CORS Settings
-            services.AddCorsPolicy(corsOptions);
+            services.AddCorsPolicy(corsConfig);
 
             //load here other external dll controllers classes (before the AddMvc/Routing)
             //https://docs.microsoft.com/en-us/aspnet/core/fundamentals/routing?view=aspnetcore-2.2#use-routing-middleware
 
-            services.AddMvc()
-            .AddJsonOptions(options =>
+            services.AddMvc().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                options.JsonSerializerOptions.Converters.Add(new SqlGeographyConverter());
+
+                options.JsonSerializerOptions.IgnoreNullValues = true;
                 options.JsonSerializerOptions.WriteIndented = true;
             });
 
-            services.AddHttpContextAccessor();
+            services.AddIdentityServerService<UserValidation>(Environment, Configuration);
 
             // Swagger UI
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc(swaggerOptions.Version, new OpenApiInfo { Title = swaggerOptions.Title, Version = swaggerOptions.Version });
-            });
-
-            // IoC Logger 
-            services.AddSerilog(Configuration); //Configuration.GetSection("Logging").GetValue<string>("FilePath"));
+            services.AddSwaggerGen(c => c.SwaggerDoc(swaggerOptionsConfig.Version, new OpenApiInfo { Title = swaggerOptionsConfig.Title, Version = swaggerOptionsConfig.Version }));
 
             // Configure object mapping (AutoMapper), Get the assembly, AutoMapper will scan our assembly and look for classes that inherit from Profile
             services.AddAutoMapper(typeof(MappingProfile));
-
-            // new one per DI request
-            services.AddTransient<IDbConnection>(db => new SqlConnection(Configuration.GetConnectionString("SqlServer")));
         }
 
         /// <summary>
@@ -88,26 +80,30 @@ namespace Api.Core
         /// <param name="builder"></param>
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            builder.RegisterModule(new DefaultApplicationModule(Environment.EnvironmentName == "Development", Configuration));
+            builder.RegisterModule(new DefaultApplicationModule(Environment.IsDevelopment(), Configuration));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IMapper autoMapper, ILogger logger, IOptions<SwaggerOptions> swaggerOptionsConfig)
+        public void Configure(IApplicationBuilder app, IMapper autoMapper, IOptions<SwaggerOptionsConfig> swaggerOptionsConfig)
         {
             if (Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCustomExceptionMiddleware();
             app.UseHttpsRedirection();
             // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware/?view=aspnetcore-2.2#order
-            //app.UseStaticFiles();
+            app.UseStaticFiles();
             //app.UseCookiePolicy();
             app.UseRouting();
 
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllers().RequireAuthorization();
             });
 
             app.UseSwagger();
@@ -124,7 +120,6 @@ namespace Api.Core
 
             // Type Descriptors
             TypeDescriptor.AddAttributes(typeof(DateTime), new TypeConverterAttribute(typeof(UtcDateTimeConverter)));
-
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using Autofac;
 using Business;
 using Business.Core.Services;
+using Data.AccessObjects;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using System;
 
 namespace Application
@@ -18,7 +20,7 @@ namespace Application
 
         public DefaultApplicationModule()
         {
-            _isDevelopment = !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("Development"));
+            _isDevelopment = !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable(Environments.Development));
         }
 
         public DefaultApplicationModule(bool isDevelopment, IConfiguration configuration)
@@ -44,6 +46,7 @@ namespace Application
         {
             builder.RegisterAssemblyTypes(ThisAssembly).AsClosedTypesOf(typeof(IBaseService<>)).AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterModule(new DefaultBusinessModule(_isDevelopment, _configuration));
+            builder.RegisterModule(new DefaultDataModule(_isDevelopment, _configuration));
         }
 
         private void RegisterDevelopmentOnlyDependencies(ContainerBuilder builder)

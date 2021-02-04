@@ -1,0 +1,242 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+
+/*
+ * This file is auto-generated, do not edit.
+ */
+
+using System;
+using Dapper;
+using System.Collections.Generic;
+using System.Linq;
+
+ namespace Data.Mapping.Dapper.Extensions
+{
+    public class DapperManyToMany<TKey, T>
+    {
+        public TKey ParentId { get; set; }
+
+        public T Child { get; set; }
+    }
+	
+    public static class GridReaderExtension
+	{
+        /// <summary>
+        /// Many to many (N -> *) multi-map.
+        /// Load a list of children to a parent's property.
+        /// Example:
+        /// SELECT Parent.ID AS ParentId, TC.* FROM TableChild TC 
+        /// INNER JOIN 
+        /// ( 
+        ///     SELECT ID From TableParent
+        /// ) Parent ON Parent.ID = TC.ParentID
+        /// 
+        /// </summary>
+    	public static Dictionary<TParentKey, IList<TReturn>> ReadChild<TParentKey, TReturn>(this SqlMapper.GridReader reader, string splitOn = "Id", bool buffered = true)
+        {
+            Dictionary<TParentKey, IList<TReturn>> childMap = new Dictionary<TParentKey, IList<TReturn>>();
+
+            reader.Read<DapperManyToMany<TParentKey, TReturn>, TReturn, DapperManyToMany<TParentKey, TReturn>>
+            ((wrapper, child) =>
+            {
+                wrapper.Child = child;
+
+                if (childMap.ContainsKey(wrapper.ParentId))
+                {
+                    childMap[wrapper.ParentId].Add(wrapper.Child);
+                }
+                else
+                {
+                    childMap.Add(wrapper.ParentId, new List<TReturn>
+                    {
+                        wrapper.Child
+                    });
+                }
+
+                return wrapper;
+            }, splitOn, buffered);
+            return childMap;
+        }
+
+        /// <summary>
+        /// Many to many (N -> *) multi-map.
+        /// Load a list of children to a parent's property.
+        /// Example:
+        /// SELECT Parent.ID AS ParentId, TC.* FROM TableChild TC 
+        /// INNER JOIN 
+        /// ( 
+        ///     SELECT ID From TableParent
+        /// ) Parent ON Parent.ID = TC.ParentID
+        /// 
+        /// </summary>
+	    public static Dictionary<TParentKey, IList<TReturn>> ReadChild<TParentKey, TReturn>(this SqlMapper.GridReader reader, Type[] typesChild, Func<object[], TReturn> mapChild, string splitOn = "Id", bool buffered = true)
+        {
+            Dictionary<TParentKey, IList<TReturn>> childMap = new Dictionary<TParentKey, IList<TReturn>>();
+            typesChild.Append(typeof(DapperManyToMany<TParentKey, TReturn>));
+
+            reader.Read(typesChild, objects =>
+            {
+                DapperManyToMany<TParentKey, TReturn> wrapper = (DapperManyToMany<TParentKey, TReturn>)objects.Last();
+
+                object[] newArray = new object[objects.Length - 1];
+                Array.Copy(objects, 0, newArray, 0, newArray.Length);
+
+                wrapper.Child = mapChild(newArray);
+
+                if (childMap.ContainsKey(wrapper.ParentId))
+                {
+                    childMap[wrapper.ParentId].Add(wrapper.Child);
+                }
+                else
+                {
+                    childMap.Add(wrapper.ParentId, new List<TReturn>
+                    {
+                        wrapper.Child
+                    });
+                }
+
+                return wrapper.Child;
+            }, splitOn, buffered);
+            return childMap;
+        }
+    <#
+	  string types1 = "TReturn";
+      string args = "";
+	for (int i = 2; i < 8; i++)
+	{
+		types1+= ", T"+ i;
+        args+= ", arg"+ i;
+	#>	 
+        /// <summary>
+        /// Many to many (N -> *) multi-map.
+        /// Load a list of children to a parent's property.
+        /// Example:
+        /// SELECT Parent.ID AS ParentId, TC.* FROM TableChild TC 
+        /// INNER JOIN 
+        /// ( 
+        ///     SELECT ID From TableParent
+        /// ) Parent ON Parent.ID = TC.ParentID
+        /// 
+        /// </summary>
+        public static Dictionary<TParentKey, IList<TReturn>> ReadChild<<#= types1 #>, TParentKey>(this SqlMapper.GridReader reader, Action<<#= types1 #>> func, string splitOn = "Id", bool buffered = true)
+        {
+            Dictionary<TParentKey, IList<TReturn>> childMap = new Dictionary<TParentKey, IList<TReturn>>();
+
+            reader.Read<DapperManyToMany<TParentKey, TReturn>, <#= types1 #>, DapperManyToMany<TParentKey, TReturn>>
+            ((wrapper, child<#= args #>) =>
+            {
+                func(child<#= args #>);
+                wrapper.Child = child;
+
+                if (childMap.ContainsKey(wrapper.ParentId))
+                {
+                    childMap[wrapper.ParentId].Add(wrapper.Child);
+                }
+                else
+                {
+                    childMap.Add(wrapper.ParentId, new List<TReturn>
+                    {
+                        wrapper.Child
+                    });
+                }
+
+                return wrapper;
+            }, splitOn, buffered);
+            return childMap;
+        }
+    <#
+	}
+	#>
+	<#
+	  string types = "";
+	for (int i = 8; i < 17; i++)
+	{
+		types+= " T"+ i +",";
+	#>	 
+        /// <summary>
+        /// Many to many (N -> *) multi-map.
+        /// Load a list of children to a parent's property.
+        /// Example:
+        /// SELECT Parent.ID AS ParentId, TC.* FROM TableChild TC 
+        /// INNER JOIN 
+        /// ( 
+        ///     SELECT ID From TableParent
+        /// ) Parent ON Parent.ID = TC.ParentID
+        /// 
+        /// </summary>
+    	public static Dictionary<TParentKey, IList<TReturn>> ReadChild<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh,<#= types #> TReturn, TParentKey>(this SqlMapper.GridReader reader, Func<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh,<#= types #> TReturn> func, string splitOn = "Id", bool buffered = true)
+        {
+            Type[] types = {
+                typeof (TFirst),
+                typeof (TSecond),
+                typeof (TThird),
+                typeof (TFourth),
+                typeof (TFifth),
+                typeof (TSixth),
+                typeof (TSeventh)
+				<#
+				for (int j = 8; j <= i; j++)
+				{
+					PushIndent("				");
+					WriteLine(",typeof(T"+j+")");
+					ClearIndent(); 
+				}
+                #>				,typeof(DapperManyToMany<TParentKey, TReturn>)               
+            };
+
+            Dictionary<TParentKey, IList<TReturn>> childMap = new Dictionary<TParentKey, IList<TReturn>>();
+
+            reader.Read(types, objects =>
+            {
+                DapperManyToMany<TParentKey, TReturn> wrapper = (DapperManyToMany<TParentKey, TReturn>)objects[<#= i #>];
+
+                wrapper.Child = func((TFirst)objects[0], (TSecond)objects[1], (TThird)objects[2], (TFourth)objects[3], (TFifth)objects[4], (TSixth)objects[5], (TSeventh)objects[6]<# for (int j = 8; j <= i; j++){ #>, (<#= "T"+j #>)objects[<#= j-1 #>]<#}#>);
+
+                if (childMap.ContainsKey(wrapper.ParentId))
+                {
+                    childMap[wrapper.ParentId].Add(wrapper.Child);
+                }
+                else
+                {
+                    childMap.Add(wrapper.ParentId, new List<TReturn>
+                    {
+                        wrapper.Child
+                    });
+                }
+
+                return wrapper.Child;
+            }, splitOn, buffered);
+            return childMap;
+        }
+
+	    public static IList<TReturn> Read<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh,<#= types #> TReturn>(this SqlMapper.GridReader reader, Func<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh,<#= types #> TReturn> func, string splitOn = "id", bool buffered = true)
+        {
+            Type[] types = {
+                typeof (TFirst),
+                typeof (TSecond),
+                typeof (TThird),
+                typeof (TFourth),
+                typeof (TFifth),
+                typeof (TSixth),
+                typeof (TSeventh)
+				<#
+				for (int j = 8; j <= i; j++)
+				{
+					PushIndent("				");
+					WriteLine(",typeof(T"+j+")");
+					ClearIndent(); 
+				}
+				#>        
+            };
+
+            return (IList<TReturn>)reader.Read(types, objects => func((TFirst)objects[0], (TSecond)objects[1], (TThird)objects[2], (TFourth)objects[3], (TFifth)objects[4], (TSixth)objects[5], (TSeventh)objects[6]<#for (int j = 8; j <= i; j++){#>, (<#= "T"+j #>)objects[<#= j-1 #>]<#}#>), splitOn, buffered);
+        }	  
+	<#
+	}
+	#>
+}
+}

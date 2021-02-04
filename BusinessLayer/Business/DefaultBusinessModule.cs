@@ -1,10 +1,10 @@
 ﻿using Autofac;
 using Business.Core;
-using CrossCutting.Security.Identity;
+using CrossCutting.Security;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Serilog;
 using System;
-using System.Reflection;
 
 namespace Business
 {
@@ -14,16 +14,14 @@ namespace Business
     /// More information about the lifetimes (Transient/Scoped/Singleton):
     /// https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-2.2#service-lifetimes
     /// </summary>
-    public class DefaultBusinessModule : Autofac.Module
+    public class DefaultBusinessModule : Module
     {
         private bool _isDevelopment;
         private readonly IConfiguration _configuration;
 
-        private const string DataAccessObjectsDdlName = "Data.AccessObjects";
-
         public DefaultBusinessModule()
         {
-            _isDevelopment = !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("Development"));
+            _isDevelopment = !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable(Environments.Development));
         }
 
         public DefaultBusinessModule(bool isDevelopment, IConfiguration configuration)
@@ -48,9 +46,8 @@ namespace Business
         private void RegisterCommonDependencies(ContainerBuilder builder)
         {
             builder.RegisterAssemblyTypes(ThisAssembly).AsClosedTypesOf(typeof(IBaseBlo<>)).AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<Authorization>().As<IAuthorization>();
-            builder.RegisterAssemblyModules(Assembly.Load(DataAccessObjectsDdlName));
-            builder.Register(c => new LoggerConfiguration().ReadFrom.Configuration(_configuration).CreateLogger()).As<ILogger>().SingleInstance();
+            builder.Register(c => Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(_configuration).CreateLogger()).As<ILogger>().SingleInstance();
+            builder.RegisterModule(new DefaultSecurityModule(_isDevelopment, _configuration));
         }
 
         private void RegisterDevelopmentOnlyDependencies(ContainerBuilder builder)

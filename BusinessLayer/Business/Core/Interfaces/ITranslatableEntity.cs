@@ -1,5 +1,4 @@
-﻿using System;
-using Business.Entities;
+﻿using Business.Core.Entities;
 
 namespace Business.Core.Interfaces
 {

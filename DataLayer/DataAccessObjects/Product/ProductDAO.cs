@@ -7,12 +7,13 @@ using Business.SearchFilters;
 using CrossCutting.Exceptions;
 using CrossCutting.SearchFilters.DataAccess;
 using Dapper;
+using Serilog;
 
 namespace Data.AccessObjects.Product
 {
     public partial class ProductDao : BaseDao, IProductDao
     {
-        public ProductDao(Serilog.ILogger logger, IDbConnection dbConnection, IPagedQueryBuilder pagedQueryBuilder) : base(logger, dbConnection, pagedQueryBuilder)
+        public ProductDao(ILogger logger, IDbConnection dbConnection, IPagedQueryBuilder pagedQueryBuilder) : base(logger, dbConnection, pagedQueryBuilder)
         {
         }
 

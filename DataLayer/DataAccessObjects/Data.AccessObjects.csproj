@@ -9,23 +9,15 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Data.AccessObjects.csproj.vspscc" />
-    <Compile Include="Multimedia/MultimediaDao.Querys.cs">
-      <DependentUpon>Multimedia/MultimediaDao.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Product/ProductDao.Listings.cs">
-      <DependentUpon>Product/ProductDao.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Product/ProductDao.Querys.cs">
-      <DependentUpon>Product/ProductDao.cs</DependentUpon>
-    </Compile>
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Npgsql" Version="5.0.3" />
     <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
   </ItemGroup>
 

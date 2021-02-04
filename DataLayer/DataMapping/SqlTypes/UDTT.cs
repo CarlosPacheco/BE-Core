@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace Data.Mapping.SqlTypes
 {
     public static class Udtt

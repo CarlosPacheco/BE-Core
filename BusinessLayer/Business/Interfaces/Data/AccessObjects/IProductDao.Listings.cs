@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Business.SearchFilters;
 
 namespace Data.AccessObjects
 {

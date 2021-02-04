@@ -1,11 +1,8 @@
 ﻿using CrossCutting.Configurations;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace CrossCutting.Web.Extensions
 {
@@ -27,7 +24,7 @@ namespace CrossCutting.Web.Extensions
         /// </summary>
         /// <param name="services"></param>
         /// <returns></returns>
-        public static IServiceCollection AddCorsPolicy(this IServiceCollection services, CorsOptions corsOptions)
+        public static IServiceCollection AddCorsPolicy(this IServiceCollection services, CorsConfig corsOptions)
         {
             services.AddCors(options =>
             {
