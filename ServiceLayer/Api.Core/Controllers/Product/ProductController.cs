@@ -31,8 +31,7 @@ namespace Api.Core.Controllers.Product
         /// </summary>
         /// <param name="searchFilter">Filtering and ordering restrictions</param>
         /// <returns>A list of Products</returns>
-        [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<ProductDto>), StatusCodes.Status200OK)]
+        [HttpGet, ProducesResponseType(typeof(IEnumerable<ProductDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Get([FromQuery] ProductSearchFilter searchFilter)
         {
@@ -46,7 +45,7 @@ namespace Api.Core.Controllers.Product
         /// <param name="productDto">Patch object containing the new Product value</param>
         /// <returns>The modified Product object</returns>
         [Route("{id}")]
-        [HttpPatch, ProducesResponseType(typeof(void), StatusCodes.Status200OK)]
+        [HttpPatch, ProducesResponseType(typeof(void), StatusCodes.Status200OK), ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Update(int id, ProductDto productDto, [FromForm] IFormFile file)
         {
             if (productDto != null && id != productDto.Id)
@@ -65,8 +64,7 @@ namespace Api.Core.Controllers.Product
         /// <param name="productDto">The new entity description object</param>
         /// <returns>The newly created Product</returns>       
         [Route("", Name = "Product_Create")]
-        [HttpPost]
-        [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
+        [HttpPost, ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
         public IActionResult Create(ProductDto productDto, [FromForm] IFormFile file)
         {
             ProductDto newproductDto = _service.Create(productDto, file);
@@ -80,11 +78,12 @@ namespace Api.Core.Controllers.Product
         /// <param name="id">The Product unique identifier</param>
         /// <returns>Product with the specified unique identifier</returns>
         [Route("{id}", Name = "Product_GetById")]
-        [HttpGet]
-        [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
-        public ProductDto GetById(int id)
+        [HttpGet, ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK), ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult GetById(int id)
         {
-            return _service.GetById(id);
+            ProductDto productDto = _service.GetById(id);
+
+            return productDto == null ? NotFound() : Ok(productDto);
         }
 
         /// <summary>
@@ -94,8 +93,7 @@ namespace Api.Core.Controllers.Product
         /// <param name="mediaTypeName"></param>
         /// <returns>The csv file with a list of <see cref="CaseDetails"/> instances</returns>  
         [Route("export", Name = "Product_Export")]
-        [HttpGet]
-        [ProducesResponseType(typeof(void), StatusCodes.Status200OK)]
+        [HttpGet, ProducesResponseType(typeof(void), StatusCodes.Status200OK)]
         public IActionResult Export([FromQuery] ProductSearchFilter searchFilter, [FromHeader(Name = "Content-Type")] string mediaTypeName)
         {
             Stream stream = _service.Export(searchFilter, mediaTypeName);

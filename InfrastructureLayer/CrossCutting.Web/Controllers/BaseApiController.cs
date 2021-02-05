@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Net.Mime;
 using CrossCutting.Web.ActionResults;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
@@ -8,7 +9,7 @@ namespace CrossCutting.Web.Controllers
     /// <summary>
     /// Base class for all API controllers
     /// </summary>
-    [Produces("application/json")]
+    [Produces(MediaTypeNames.Application.Json)]
     [ApiController]
     public abstract class BaseApiController : ControllerBase
     {

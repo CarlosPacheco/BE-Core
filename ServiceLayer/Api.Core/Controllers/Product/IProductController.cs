@@ -34,7 +34,7 @@ namespace Api.Core.Controllers.Product
         /// </summary>
         /// <param name="id">The Product unique identifier</param>
         /// <returns>Product with the specified unique identifier</returns>
-        ProductDto GetById(int id);
+        IActionResult GetById(int id);
 
         /// <summary>
         /// Export Product Details 
