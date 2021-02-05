@@ -4,12 +4,11 @@ using System.Linq;
 using Business.Core;
 using Business.LogicObjects.MultimediaFiles;
 using Business.SearchFilters;
-using CrossCutting.Exceptions;
 using CrossCutting.Helpers.Helpers;
 using CrossCutting.Security.Identity;
 using Dapper;
-//using CrossCutting.Web.Mime;
 using Data.AccessObjects;
+using Serilog;
 
 namespace Business.LogicObjects.Product
 {
@@ -22,7 +21,7 @@ namespace Business.LogicObjects.Product
         /// </summary>
         /// <param name="authorization">Security information access object to be used by this instance</param>
         /// <param name="dataAccess">Application Request's data access object to be used by this instance</param>
-        public ProductBlo(IProductDao dataAccess, IAuthorization authorization, IMultimediaBlo multimediaBLO) : base(dataAccess, authorization)
+        public ProductBlo(IProductDao dataAccess, IAuthorization authorization, ILogger logger, IMultimediaBlo multimediaBLO) : base(dataAccess, authorization, logger)
         {
             MultimediaBLO = multimediaBLO;
         }

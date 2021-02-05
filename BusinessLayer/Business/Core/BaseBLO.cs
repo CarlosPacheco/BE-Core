@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Data;
 using Business.Core.Data.Interfaces;
-using Business.Core.Entities;
 using CrossCutting.Security.Identity;
+using Serilog;
 
 namespace Business.Core
 {
@@ -19,22 +19,28 @@ namespace Business.Core
 
         public IAuthorization Authorization { get; set; }
 
-        public BaseBlo(TDataAccessObject dataAccess)
+        /// <summary>
+        /// Logger instance
+        /// </summary>
+        protected ILogger Logger { get; }
+
+        public BaseBlo(TDataAccessObject dataAccess, ILogger logger)
         {
             DataAccess = dataAccess;
+            Logger = logger;
         }
 
-        public BaseBlo(TDataAccessObject dataAccess, IAuthorization authorization) : this(dataAccess)
+        public BaseBlo(TDataAccessObject dataAccess, IAuthorization authorization, ILogger logger) : this(dataAccess, logger)
         {
             Authorization = authorization;
         }
 
-        public BaseBlo(TDataAccessObject dataAccess, IAuthorization authorization, IDbTransaction dbTransaction) : this(dataAccess, authorization)
+        public BaseBlo(TDataAccessObject dataAccess, IAuthorization authorization, IDbTransaction dbTransaction, ILogger logger) : this(dataAccess, authorization, logger)
         {
             DataAccess.SetDbTransaction(dbTransaction);
         }
 
-        public BaseBlo(TDataAccessObject dataAccess, IAuthorization authorization, IDbConnection dbConnection) : this(dataAccess, authorization)
+        public BaseBlo(TDataAccessObject dataAccess, IAuthorization authorization, IDbConnection dbConnection, ILogger logger) : this(dataAccess, authorization, logger)
         {
             DataAccess.SetDbConnection(dbConnection);
         }
@@ -84,48 +90,4 @@ namespace Business.Core
             Dispose(false);
         }
     }
-
-
-    /// <summary>
-    /// Describes base behaviour for business entities logic controllers
-    /// </summary>
-    /// <typeparam name="TEntity">Business entity type</typeparam>
-    /// <typeparam name="TDataAccessObject">Business entity corresponding data access object type</typeparam>
-    public abstract class BaseBlo<TEntity, TDataAccessObject> : BaseBlo<TDataAccessObject>
-        where TEntity : class, IBaseEntity, new()
-        where TDataAccessObject : IBaseDao
-    {
-        
-        /// <summary>
-        /// Loads business entities related and referenced by <see cref="TEntity"/>
-        /// </summary>
-        /// <remarks>Should be overriden whenever there's need to load referenced/nested entities</remarks>
-        /// <returns></returns>
-        protected virtual TEntity ReferencedEntity { get; set; }
-
-        protected BaseBlo(TDataAccessObject dataAccess) : base(dataAccess)
-        {
-        }
-
-        protected BaseBlo(TDataAccessObject dataAccess, IAuthorization authorization) : base(dataAccess, authorization)
-        {
-        }
-
-        protected BaseBlo(TDataAccessObject dataAccess, IAuthorization authorization, IDbTransaction dbTransaction) : base(dataAccess, authorization, dbTransaction)
-        {
-        }
-
-        protected BaseBlo(TDataAccessObject dataAccess, IAuthorization authorization, IDbConnection dbConnection) : base(dataAccess, authorization, dbConnection)
-        {
-        }
-
-        /// <summary>
-        /// Allows an object to try to free resources and perform other cleanup operations before it is reclaimed by garbage collection.
-        /// </summary>
-        ~BaseBlo()
-        {
-            Dispose(false);
-        }
-    }
-
 }
