@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Business.SearchFilters;
+using Business.Entities;
 
-namespace Business.LogicObjects.Product
+namespace Business.LogicObjects.Products
 {
     public partial interface IProductBlo
     {
@@ -9,6 +9,6 @@ namespace Business.LogicObjects.Product
         /// Get the listings Products
         /// </summary>
         /// <returns>The list of Products </returns>
-        IEnumerable<Entities.Product> GetProductListing();
+        IEnumerable<Product> GetProductListing();
     }
 }

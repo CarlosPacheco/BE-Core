@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
 using Business.Core.Services;
-using Business.LogicObjects.Product;
+using Business.LogicObjects.Products;
 using CrossCutting.Exceptions;
 using CrossCutting.Security.Identity;
 using Data.TransferObjects;

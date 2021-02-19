@@ -4,6 +4,7 @@ using Business.Core.Data;
 using Business.Entities;
 using CrossCutting.SearchFilters.DataAccess;
 using Dapper;
+using Interfaces.Data.AccessObjects;
 using Serilog;
 
 namespace Data.AccessObjects.MultimediaFiles

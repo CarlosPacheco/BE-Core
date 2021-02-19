@@ -1,7 +1,7 @@
 ﻿using Business.SearchFilters;
 using Dapper;
 
-namespace Data.AccessObjects.Product
+namespace Data.AccessObjects.Products
 {
     public partial class ProductDao
     {

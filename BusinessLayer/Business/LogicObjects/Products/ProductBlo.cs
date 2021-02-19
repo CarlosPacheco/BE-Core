@@ -2,15 +2,16 @@
 using System.IO;
 using System.Linq;
 using Business.Core;
+using Business.Entities;
 using Business.LogicObjects.MultimediaFiles;
 using Business.SearchFilters;
 using CrossCutting.Helpers.Helpers;
 using CrossCutting.Security.Identity;
 using Dapper;
-using Data.AccessObjects;
+using Interfaces.Data.AccessObjects.Products;
 using Serilog;
 
-namespace Business.LogicObjects.Product
+namespace Business.LogicObjects.Products
 {
     public partial class ProductBlo : BaseBlo<IProductDao>, IProductBlo
     {
@@ -31,7 +32,7 @@ namespace Business.LogicObjects.Product
         /// </summary>
         /// <param name="searchFilter">Filtering and ordering restrictions</param>
         /// <returns>A list of Products</returns>
-        public IEnumerable<Entities.Product> Get(ProductSearchFilter searchFilter)
+        public IEnumerable<Product> Get(ProductSearchFilter searchFilter)
         {
             return DataAccess.Get(searchFilter);
         }
@@ -41,7 +42,7 @@ namespace Business.LogicObjects.Product
         /// </summary>
         /// <param name="productDto">Patch object containing the new Product value</param>
         /// <returns>The modified Product object</returns>
-        public void Update(Entities.Product productDto)
+        public void Update(Product productDto)
         {
             DataAccess.Update(productDto);
         }
@@ -51,7 +52,7 @@ namespace Business.LogicObjects.Product
         /// </summary>
         /// <param name="productDto">The new entity description object</param>
         /// <returns>The newly created Product</returns>  
-        public Entities.Product Create(Entities.Product productDto)
+        public Product Create(Product productDto)
         {
             return GetById(DataAccess.Create(productDto));
         }
@@ -61,11 +62,10 @@ namespace Business.LogicObjects.Product
         /// </summary>
         /// <param name="id">The Product unique identifier</param>
         /// <returns>Product with the specified unique identifier</returns>
-        public Entities.Product GetById(int id)
+        public Product GetById(int id)
         {
             return DataAccess.GetById(id);
         }
-
 
         /// <summary>
         /// Export Products 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Mime;
-using Application.Services.Product;
+using Application.Services.Products;
 using Business.SearchFilters;
 using CrossCutting.Web.Controllers;
 using CrossCutting.Web.Mime;
@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 
-namespace Api.Core.Controllers.Product
+namespace Api.Core.Controllers.Products
 {
     [Route("api/[controller]")]
     public class ProductController : BaseApiController, IProductController

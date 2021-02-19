@@ -2,7 +2,7 @@
 using Business.Entities;
 using CrossCutting.Configurations;
 using CrossCutting.Security.Identity;
-using Data.AccessObjects;
+using Interfaces.Data.AccessObjects;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Serilog;

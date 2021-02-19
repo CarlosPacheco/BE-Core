@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Business.Entities;
+using System.Collections.Generic;
 
-namespace Data.AccessObjects
+namespace Interfaces.Data.AccessObjects.Products
 {
     public partial interface IProductDao
     {
@@ -8,6 +9,6 @@ namespace Data.AccessObjects
         /// Get the listings Products
         /// </summary>
         /// <returns>The list of Products </returns>
-        IEnumerable<Business.Entities.Product> GetProductListing();
+        IEnumerable<Product> GetProductListing();
     }
 }

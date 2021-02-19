@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Business.Core.Data;
+using Business.Entities;
 using Business.SearchFilters;
 using CrossCutting.Exceptions;
 using CrossCutting.SearchFilters.DataAccess;
 using Dapper;
+using Interfaces.Data.AccessObjects.Products;
 using Serilog;
 
-namespace Data.AccessObjects.Product
+namespace Data.AccessObjects.Products
 {
     public partial class ProductDao : BaseDao, IProductDao
     {
@@ -22,9 +24,9 @@ namespace Data.AccessObjects.Product
         /// </summary>
         /// <param name="searchFilter">Filtering and ordering restrictions</param>
         /// <returns>A list of Products</returns>
-        public IEnumerable<Business.Entities.Product> Get(ProductSearchFilter searchFilter)
+        public IEnumerable<Product> Get(ProductSearchFilter searchFilter)
         {
-            return ExecutePagedQuery<Business.Entities.Product>(GetGetQuery(searchFilter, out object parameters), searchFilter, parameters);
+            return ExecutePagedQuery<Product>(GetGetQuery(searchFilter, out object parameters), searchFilter, parameters);
         }
 
         /// <summary>
@@ -32,7 +34,7 @@ namespace Data.AccessObjects.Product
         /// </summary>
         /// <param name="productDto">Patch object containing the new Product value</param>
         /// <returns>The modified Product object</returns>
-        public void Update(Business.Entities.Product productDto)
+        public void Update(Product productDto)
         {
             try
             {
@@ -72,7 +74,7 @@ namespace Data.AccessObjects.Product
         /// </summary>
         /// <param name="productDto">The new entity description object</param>
         /// <returns>The newly created Product</returns>  
-        public int Create(Business.Entities.Product productDto)
+        public int Create(Product productDto)
         {
             try
             {
@@ -116,9 +118,9 @@ namespace Data.AccessObjects.Product
         /// </summary>
         /// <param name="id">The case unique identifier</param>
         /// <returns>Case with the specified unique identifier</returns>
-        public Business.Entities.Product GetById(int id)
+        public Product GetById(int id)
         {
-            Business.Entities.Product Product = DbConnection.Query<Business.Entities.Product> (QueryGetByIdentifier, new { Id = id }, CurrentTransaction).FirstOrDefault();
+            Product Product = DbConnection.Query<Product>(QueryGetByIdentifier, new { Id = id }, CurrentTransaction).FirstOrDefault();
 
             if (Product == null)
             {

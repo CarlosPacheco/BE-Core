@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Business.SearchFilters;
+using Business.Entities;
 
-namespace Business.LogicObjects.Product
+namespace Business.LogicObjects.Products
 {
     public partial class ProductBlo
     {
@@ -9,7 +9,7 @@ namespace Business.LogicObjects.Product
         /// Get the listings Products 
         /// </summary>
         /// <returns>The list of Products </returns>
-        public IEnumerable<Entities.Product> GetProductListing()
+        public IEnumerable<Product> GetProductListing()
         {
             return DataAccess.GetProductListing();
         }

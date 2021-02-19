@@ -1,6 +1,6 @@
 ﻿using Business.Core.Data.Interfaces;
 
-namespace Data.AccessObjects
+namespace Interfaces.Data.AccessObjects
 {
     /// <summary>
     /// Describes a Data Access Object for <see cref="Multimedia"/> business entity

@@ -37,13 +37,13 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Interfaces\Data\AccessObjects\IProductDao.Listings.cs">
+    <Compile Update="Interfaces\Data\AccessObjects\Products\IProductDao.Listings.cs">
       <DependentUpon>Product/IProductDao.cs</DependentUpon>
     </Compile>
-    <Compile Update="LogicObjects\Product\IProductBlo.Listings.cs">
+    <Compile Update="LogicObjects\Products\IProductBlo.Listings.cs">
       <DependentUpon>Product/IProductBlo.cs</DependentUpon>
     </Compile>
-    <Compile Update="LogicObjects\Product\ProductBlo.Listings.cs">
+    <Compile Update="LogicObjects\Products\ProductBlo.Listings.cs">
       <DependentUpon>Product/ProductBlo.cs</DependentUpon>
     </Compile>
   </ItemGroup>
