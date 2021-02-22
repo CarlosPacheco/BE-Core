@@ -20,15 +20,4 @@ namespace Business.Core.Services
         /// </summary>
         IAuthorization Authorization { get; }
     }
-
-    /// <summary>
-    /// Describes a base (API) controller service
-    /// </summary>
-    /// <remarks>
-    /// Contextualized about entry (API) controller through reference property.
-    /// </remarks>
-    public interface IBaseService : IBaseService<IBaseBlo>
-    {
-    }
-
 }

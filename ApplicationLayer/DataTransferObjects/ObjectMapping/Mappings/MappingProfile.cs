@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace Data.TransferObjects.ObjectMapping.Mappings
 {
@@ -10,12 +9,7 @@ namespace Data.TransferObjects.ObjectMapping.Mappings
     {
         public MappingProfile()
         {
-            ApplyMappingsFromAssembly(typeof(MappingProfile).Assembly);
-        }
-
-        private void ApplyMappingsFromAssembly(Assembly assembly)
-        {
-            IEnumerable<Type> types = assembly.GetExportedTypes().Where(t => !t.IsGenericType && t.GetInterface(nameof(IMapFrom)) != null);
+            IEnumerable<Type> types = typeof(MappingProfile).Assembly.GetExportedTypes().Where(t => !t.IsGenericType && t.GetInterface(nameof(IMapFrom)) != null);
 
             foreach (Type type in types)
             {
