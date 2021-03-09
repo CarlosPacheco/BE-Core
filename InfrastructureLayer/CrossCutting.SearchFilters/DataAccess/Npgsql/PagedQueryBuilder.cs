@@ -10,7 +10,7 @@ namespace CrossCutting.SearchFilters.DataAccess.Npgsql
     /// </summary>
     public partial class PagedQueryBuilder : IPagedQueryBuilder
     {
-        private const string SqlTotalCountSelectClauseValue = @"TotalCount = COUNT(1)";
+        private const string SqlTotalCountSelectClauseValue = @"COUNT(1) as TotalCount";
         private readonly Regex SqlSelectClauseRegex = new Regex(@"(SELECT)(.*?)( FROM)", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
 
         /// <summary>

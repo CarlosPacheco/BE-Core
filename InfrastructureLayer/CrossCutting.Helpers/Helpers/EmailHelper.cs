@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
-using Serilog;
+using Microsoft.Extensions.Logging;
 
 namespace CrossCutting.Helpers.Helpers
 {
@@ -33,7 +34,7 @@ namespace CrossCutting.Helpers.Helpers
         private readonly string _smtpHost;
 
         
-        public EmailHelper(ILogger logger, string accountUserName, string accountPassword, string smtpHost)
+        public EmailHelper(ILogger<EmailHelper> logger, string accountUserName, string accountPassword, string smtpHost)
         {
             Logger = logger;
             _accountUserName = accountUserName;
@@ -60,7 +61,7 @@ namespace CrossCutting.Helpers.Helpers
                 UseDefaultCredentials = false
             };
 
-            System.Net.NetworkCredential credentials = new System.Net.NetworkCredential(_accountUserName, _accountPassword);
+            NetworkCredential credentials = new NetworkCredential(_accountUserName, _accountPassword);
             client.EnableSsl = true;
             client.Credentials = credentials;
 
@@ -120,31 +121,29 @@ namespace CrossCutting.Helpers.Helpers
                     throw new ApplicationException("Null or empty email body.");
                 }
 
-                using (SmtpClient smtpClient = new SmtpClient())
-                using (MailMessage mail = new MailMessage())
+                using SmtpClient smtpClient = new SmtpClient();
+                using MailMessage mail = new MailMessage();
+                mail.Subject = subject;
+                mail.Body = messageBody;
+                mail.IsBodyHtml = isBodyHtml;
+                mail.Bcc.Add(recipients);
+
+                if (attachments?.Any() == true)
                 {
-                    mail.Subject = subject;
-                    mail.Body = messageBody;
-                    mail.IsBodyHtml = isBodyHtml;
-                    mail.Bcc.Add(recipients);
-
-                    if (attachments?.Any() == true)
+                    foreach (string attachment in attachments)
                     {
-                        foreach (string attachment in attachments)
-                        {
-                            Attachment newAttachment = new Attachment(attachment);
-                            mail.Attachments.Add(newAttachment);
-                        }
+                        Attachment newAttachment = new Attachment(attachment);
+                        mail.Attachments.Add(newAttachment);
                     }
-
-                    await smtpClient.SendMailAsync(mail);
-
-                    return true;
                 }
+
+                await smtpClient.SendMailAsync(mail);
+
+                return true;
             }
             catch (Exception ex)
             {
-                logger.Error("[EmailHelper] Error sending email", ex);
+                logger.LogError("[EmailHelper] Error sending email", ex);
                 return false;
             }
         }

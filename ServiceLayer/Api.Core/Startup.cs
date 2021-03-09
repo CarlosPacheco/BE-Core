@@ -20,6 +20,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 namespace Api.Core
 {
@@ -95,6 +96,7 @@ namespace Api.Core
             // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware/?view=aspnetcore-2.2#order
             app.UseStaticFiles();
             //app.UseCookiePolicy();
+            app.UseSerilogRequestLogging();
             app.UseRouting();
 
             app.UseAuthentication();
@@ -119,6 +121,8 @@ namespace Api.Core
 
             // Type Descriptors
             TypeDescriptor.AddAttributes(typeof(DateTime), new TypeConverterAttribute(typeof(UtcDateTimeConverter)));
+
+            app.AddNpgsqlLogManager();
         }
     }
 }

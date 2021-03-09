@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net.Mime;
 using CrossCutting.Web.ActionResults;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 
@@ -9,7 +10,7 @@ namespace CrossCutting.Web.Controllers
     /// <summary>
     /// Base class for all API controllers
     /// </summary>
-    [Produces(MediaTypeNames.Application.Json)]
+    [Produces(MediaTypeNames.Application.Json), ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ApiController]
     public abstract class BaseApiController : ControllerBase
     {

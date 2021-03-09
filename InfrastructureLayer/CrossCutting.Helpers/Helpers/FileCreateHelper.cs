@@ -1,5 +1,6 @@
 ﻿using CrossCutting.Helpers.Extensions;
-using OfficeOpenXml;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
 using ServiceStack.Text;
 using System;
 using System.Collections.Generic;
@@ -17,61 +18,56 @@ namespace CrossCutting.Helpers.Helpers
         /// <param name="fileData"></param>
         /// <param name="stream"></param>
         /// <returns></returns>
-        public static Stream Excel<T>(IList<T> fileData, Func<T, object> mapper = null, Stream stream = null, string blankSheetName = "MySheet")
+        public static Stream Excel<T>(IList<T> fileData, Func<T, object> mapper = null, string blankSheetName = "MySheet")
         {
-            if (stream == null)
+            Stream stream = new MemoryStream();
+
+            IWorkbook workbook = new XSSFWorkbook();
+            ISheet excelSheet = workbook.CreateSheet(blankSheetName);
+
+            bool headerWritten = false;
+
+            int rowTotal = fileData.Count;
+
+            for (int i = 0; i < rowTotal; i++)
             {
-                stream = new MemoryStream();
-            }
+                IRow row = excelSheet.CreateRow(i);
 
-            using (ExcelPackage excel = new ExcelPackage(stream))
-            {
-                ExcelWorksheet ws = excel.Workbook.Worksheets.Add(blankSheetName);
+                T fileRow = fileData[i];
 
-                bool headerWritten = false;
+                IDictionary<string, object> rowFileDic = mapper == null ? fileRow.ToDictionary() : mapper(fileRow).ToDictionary();
 
-                int rowTotal = fileData.Count;
-
-                ws.InsertRow(1, rowTotal);
-
-                for (int i = 0; i < rowTotal; i++)
+                if (!headerWritten)
                 {
-                    T fileRow = fileData[i];
-
-                    IDictionary<string, object> row = mapper == null ? fileRow.ToDictionary() : mapper(fileRow).ToDictionary();
-
-                    if (!headerWritten)
+                    for (int j = 0; j < rowFileDic.Count; j++)
                     {
-                        for (int j = 0; j < row.Count; j++)
-                        {
-                            // cells start at [1] index not [0] (the magic +1 )
-                            ws.Cells[i + 1, j + 1].Value = row.Keys.ElementAt(j);
-                        }
-
-                        headerWritten = true;
+                        row.CreateCell(j).SetCellValue(rowFileDic.Keys.ElementAt(j));
                     }
 
-                    for (int j = 0; j < row.Count; j++)
+                    headerWritten = true;
+                    i++;
+                }
+
+                for (int j = 0; j < rowFileDic.Count; j++)
+                {
+                    object value = rowFileDic.Values.ElementAt(j);
+                    if (value != null)
                     {
-                        // the magic +2 is the position with the header row
-                        object value = row.Values.ElementAt(j);
-                        if (value != null)
+                        if (value is DateTime time)
                         {
-                            if (value is DateTime time)
-                            {
-                                ws.Cells[i + 2, j + 1].Value = time.ToString("dd/MM/yyyy hh:mm");
-                            }
-                            else if (!value.GetType().IsClass || value.GetType().IsSealed)
-                            {
-                                ws.Cells[i + 2, j + 1].Value = value;
-                            }
+                            row.CreateCell(j).SetCellValue(time.ToString("dd/MM/yyyy hh:mm"));
+                        }
+                        else if (!value.GetType().IsClass || value.GetType().IsSealed)
+                        {
+                            row.CreateCell(j).SetCellValue(value.ToString());
                         }
                     }
                 }
-
-                //Save the new workbook. We haven't specified the filename so use the Save as method.
-                excel.Save();
             }
+
+            //Save the new workbook. We haven't specified the filename so use the Save as method.
+            workbook.Write(stream);
+
             stream.Position = 0;
 
             return stream;
@@ -86,51 +82,51 @@ namespace CrossCutting.Helpers.Helpers
         /// <returns></returns>
         public static Stream Excel(IEnumerable<IDictionary<string, object>> fileData, Stream stream, string blankSheetName = "MySheet")
         {
-            using (ExcelPackage excel = new ExcelPackage(stream))
+            IWorkbook workbook = new XSSFWorkbook();
+            ISheet excelSheet = workbook.CreateSheet(blankSheetName);
+
+            bool headerWritten = false;
+
+            int rowTotal = fileData.Count();
+
+            for (int i = 0; i < rowTotal; i++)
             {
-                ExcelWorksheet ws = excel.Workbook.Worksheets.Add(blankSheetName);
+                IRow row = excelSheet.CreateRow(i);
 
-                bool headerWritten = false;
-
-                int rowTotal = fileData.Count();
-
-                ws.InsertRow(1, rowTotal);
-
-                for (int i = 0; i < rowTotal; i++)
+                IDictionary<string, object> rowDic = fileData.ElementAt(i);
+                if (!headerWritten)
                 {
-                    IDictionary<string, object> row = fileData.ElementAt(i);
-                    if (!headerWritten)
+                    for (int j = 0; j < rowDic.Count; j++)
                     {
-                        for (int j = 0; j < row.Count; j++)
-                        {
-                            // cells start at [1] index not [0] (the magic +1 )
-                            ws.Cells[i + 1, j + 1].Value = row.Keys.ElementAt(j);
-                        }
-
-                        headerWritten = true;
+                        row.CreateCell(j).SetCellValue(rowDic.Keys.ElementAt(j));
                     }
 
-                    for (int j = 0; j < row.Count; j++)
+                    headerWritten = true;
+                    i++;
+                }
+
+                for (int j = 0; j < rowDic.Count; j++)
+                {
+                    // the magic +2 is the position with the header row
+                    object value = rowDic.Values.ElementAt(j);
+                    if (value != null)
                     {
-                        // the magic +2 is the position with the header row
-                        object value = row.Values.ElementAt(j);
-                        if (value != null)
+                        if (value is DateTime time)
                         {
-                            if (value is DateTime time)
-                            {
-                                ws.Cells[i + 2, j + 1].Value = time.ToShortDateString();
-                            }
-                            else if (!value.GetType().IsClass)
-                            {
-                                ws.Cells[i + 2, j + 1].Value = value;
-                            }
+
+                            row.CreateCell(j).SetCellValue(time.ToShortDateString());
+                        }
+                        else if (!value.GetType().IsClass)
+                        {
+                            row.CreateCell(j).SetCellValue(value.ToString());
                         }
                     }
                 }
-
-                //Save the new workbook. We haven't specified the filename so use the Save as method.
-                excel.Save();
             }
+
+            //Save the new workbook. We haven't specified the filename so use the Save as method.
+            workbook.Write(stream);
+
             stream.Position = 0;
 
             return stream;
@@ -143,7 +139,7 @@ namespace CrossCutting.Helpers.Helpers
             {
                 stream = new MemoryStream();
             }
-             //Please don't closed the Stream! (the response need it open) Use this way and not this way -> stream.writeCsv(fileData)
+            //Please don't closed the Stream! (the response need it open) Use this way and not this way -> stream.writeCsv(fileData)
             CsvSerializer.SerializeToStream(fileData, stream);
             stream.Position = 0;
 

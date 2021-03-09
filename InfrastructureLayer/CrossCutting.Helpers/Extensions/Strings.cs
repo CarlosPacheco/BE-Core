@@ -61,7 +61,7 @@ namespace CrossCutting.Helpers.Extensions
 
         public static DateTime? ToNullableDateTime(this string str)
         {
-            return DateTime.TryParse(str, out DateTime date) ? (DateTime?)date : null;
+            return DateTime.TryParse(str, out DateTime date) ? date : null;
         }
 
         public static int? ToNullableInt32(this string str)

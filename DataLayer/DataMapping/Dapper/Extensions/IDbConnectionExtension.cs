@@ -7,7 +7,6 @@ using System;
 using Dapper;
 using System.Collections.Generic;
 using System.Data;
-using Data.Mapping.Dapper.Extensions;
 
 namespace Data.Mapping.Dapper.Extensions
 {

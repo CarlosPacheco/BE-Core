@@ -8,7 +8,7 @@ namespace CrossCutting.Helpers.Extensions
     /// <summary>
     /// Extensions related to <see cref="DbCommand"/> setup, properties, parameters, etc.
     /// </summary>
-    public static class DbCommandExtensions
+    public static class DbParameterCollectionExtensions
     {
         /// <summary>
         /// Adds an input parameter to a <see cref="DbCommand"/>
