@@ -1,5 +1,5 @@
 ﻿
-namespace Data.Mapping.SqlTypes
+namespace CrossCutting.Mapping.SqlTypes
 {
     public static class Udtt
     {

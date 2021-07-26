@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Reflection;
 using Dapper;
-using Data.Mapping.Dapper.Extensions;
+using CrossCutting.Mapping.Dapper.Extensions;
 using Npgsql;
 
-namespace Data.Mapping.Dapper
+namespace CrossCutting.Mapping.Dapper
 {
     /// <summary>
     /// Provides type mapping setup and management

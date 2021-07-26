@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using Dapper;
-using Data.Mapping.Dapper.Oracle;
+using CrossCutting.Mapping.Dapper.Oracle;
 
 namespace CrossCutting.SearchFilters.DataAccess.Oracle
 {

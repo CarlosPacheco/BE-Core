@@ -1,7 +1,7 @@
 ﻿using Dapper;
 using NetTopologySuite.Geometries;
 
-namespace Data.Mapping.Dapper.Handlers
+namespace CrossCutting.Mapping.Dapper.Handlers
 {
     /// <summary>
     /// Acts on behalf of all type-handlers in this package

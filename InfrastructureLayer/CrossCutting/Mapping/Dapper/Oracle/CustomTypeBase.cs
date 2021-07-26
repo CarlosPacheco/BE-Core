@@ -4,7 +4,7 @@ using System.Text;
 //using Oracle.ManagedDataAccess.Client;
 //using Oracle.ManagedDataAccess.Types;
 
-namespace Data.Mapping.Dapper.Oracle
+namespace CrossCutting.Mapping.Dapper.Oracle
 {
     public static class OracleUdt
     {

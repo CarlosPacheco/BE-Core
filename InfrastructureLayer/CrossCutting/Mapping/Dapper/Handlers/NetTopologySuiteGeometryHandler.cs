@@ -4,7 +4,7 @@ using Dapper;
 using NetTopologySuite.Geometries;
 using NetTopologySuite.IO;
 
-namespace Data.Mapping.Dapper.Handlers
+namespace CrossCutting.Mapping.Dapper.Handlers
 {
     /// <summary>
     /// Type-handler for the Geometry spatial type.

@@ -2,7 +2,7 @@
 using System.Data.SqlClient;
 using Dapper;
 
-namespace Data.Mapping.Dapper
+namespace CrossCutting.Mapping.Dapper
 {
     // TODO:: DAPPER maybe already have this inside the dapper core, check it please
 

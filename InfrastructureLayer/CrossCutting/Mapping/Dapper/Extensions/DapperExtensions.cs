@@ -4,10 +4,10 @@ using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Dapper;
-using Data.Mapping.Dapper.Oracle;
+using CrossCutting.Mapping.Dapper.Oracle;
 using static Dapper.SqlMapper;
 
-namespace Data.Mapping.Dapper.Extensions
+namespace CrossCutting.Mapping.Dapper.Extensions
 {
     public static class DapperExtensions
     {

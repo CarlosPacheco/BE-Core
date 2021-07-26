@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Reflection;
 using Dapper;
-using Data.Mapping.DatabaseColumns;
+using CrossCutting.Mapping.DatabaseColumns;
 
-namespace Data.Mapping.Dapper.Extensions
+namespace CrossCutting.Mapping.Dapper.Extensions
 {
     public static class AssemblyExtensions
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Dapper;
 
-namespace Data.Mapping.DatabaseColumns
+namespace CrossCutting.Mapping.DatabaseColumns
 {
     /// <summary>
     /// Uses the Name value of the <see cref="ColumnMapping"/> specified to determine

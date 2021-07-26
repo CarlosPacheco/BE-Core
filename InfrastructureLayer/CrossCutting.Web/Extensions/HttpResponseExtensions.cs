@@ -1,6 +1,6 @@
 ﻿using CrossCutting.Exceptions.Models;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
+using System.Text.Json;
 using System;
 using System.Net.Mime;
 using System.Threading.Tasks;
@@ -18,7 +18,7 @@ namespace CrossCutting.Web.Extensions
         {
             httpResponse.ContentType = MediaTypeNames.Application.Json;
             httpResponse.StatusCode = statusCode;
-            return httpResponse.WriteAsync(JsonConvert.SerializeObject(new ExceptionInfo(statusCode, exception)));
+            return httpResponse.WriteAsync(JsonSerializer.Serialize(new ExceptionInfo(statusCode, exception)));
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace CrossCutting.Web.Extensions
         {
             httpResponse.ContentType = MediaTypeNames.Application.Json;
             httpResponse.StatusCode = statusCode;
-            return httpResponse.WriteAsync(JsonConvert.SerializeObject(new ExceptionInfo(statusCode, message)));
+            return httpResponse.WriteAsync(JsonSerializer.Serialize(new ExceptionInfo(statusCode, message)));
         }
     }
 }

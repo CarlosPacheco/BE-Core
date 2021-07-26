@@ -8,7 +8,7 @@ using Dapper;
 using System.Collections.Generic;
 using System.Data;
 
-namespace Data.Mapping.Dapper.Extensions
+namespace CrossCutting.Mapping.Dapper.Extensions
 {
 
 	public static class IDbConnectionExtension

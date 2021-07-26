@@ -11,7 +11,7 @@ using CrossCutting.Security;
 using CrossCutting.Security.EventsType;
 using CrossCutting.Web.Extensions;
 using CrossCutting.Web.JsonConverters;
-using Data.Mapping.Dapper;
+using CrossCutting.Mapping.Dapper;
 using Data.TransferObjects.ObjectMapping.Mappings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

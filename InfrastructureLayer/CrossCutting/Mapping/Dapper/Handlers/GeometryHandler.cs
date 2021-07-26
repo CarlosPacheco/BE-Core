@@ -5,7 +5,7 @@ using NetTopologySuite.Geometries;
 using Npgsql;
 using NpgsqlTypes;
 
-namespace Data.Mapping.Dapper
+namespace CrossCutting.Mapping.Dapper
 {
     /// <summary>
     /// Type-handler for the SqlGeography spatial type

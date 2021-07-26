@@ -20,13 +20,13 @@
   <ItemGroup>
     <ProjectReference Include="..\..\ApplicationLayer\Application\Application.csproj" />
     <ProjectReference Include="..\..\DataLayer\DataAccessObjects\Data.AccessObjects.csproj" />
-    <PackageReference Include="Autofac" Version="6.1.0" />
+    <PackageReference Include="Autofac" Version="6.2.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
-    <PackageReference Include="Npgsql" Version="5.0.3" />
-    <PackageReference Include="Serilog.AspNetCore" Version="4.0.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.0" />
+    <PackageReference Include="Npgsql" Version="5.0.7" />
+    <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
   </ItemGroup>
 
 </Project>

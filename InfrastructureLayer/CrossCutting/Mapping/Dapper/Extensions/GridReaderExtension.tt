@@ -14,7 +14,7 @@ using Dapper;
 using System.Collections.Generic;
 using System.Linq;
 
- namespace Data.Mapping.Dapper.Extensions
+ namespace CrossCutting.Mapping.Dapper.Extensions
 {
     public class DapperManyToMany<TKey, T>
     {

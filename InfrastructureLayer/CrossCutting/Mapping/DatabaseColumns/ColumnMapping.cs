@@ -1,6 +1,6 @@
 using System;
 
-namespace Data.Mapping.DatabaseColumns
+namespace CrossCutting.Mapping.DatabaseColumns
 {
     /// <summary>
     /// Represents the database column a property is mapped to

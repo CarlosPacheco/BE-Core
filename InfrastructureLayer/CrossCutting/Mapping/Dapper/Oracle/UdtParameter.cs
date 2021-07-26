@@ -2,7 +2,7 @@
 using Dapper;
 using Oracle.ManagedDataAccess.Client;
 
-namespace Data.Mapping.Dapper.Oracle
+namespace CrossCutting.Mapping.Dapper.Oracle
 {
     public class UdtParameter : SqlMapper.IDynamicParameters
     {

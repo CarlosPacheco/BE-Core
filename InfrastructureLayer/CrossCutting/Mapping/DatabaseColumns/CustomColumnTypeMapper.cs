@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Dapper;
 
-namespace Data.Mapping.DatabaseColumns
+namespace CrossCutting.Mapping.DatabaseColumns
 {
     /// <summary>
     /// Custom type mapper for Db columns to Entity properties

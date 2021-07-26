@@ -3,7 +3,7 @@ using Dapper;
 using Oracle.ManagedDataAccess.Client;
 using System.Data;
 
-namespace Data.Mapping.Dapper.Oracle
+namespace CrossCutting.Mapping.Dapper.Oracle
 {
     public class OracleDynamicParameters : SqlMapper.IDynamicParameters
     {
