@@ -17,18 +17,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\InfrastructureLayer\CrossCutting.Helpers\CrossCutting.Helpers.csproj" />
-    <ProjectReference Include="..\..\InfrastructureLayer\CrossCutting.SearchFilters\CrossCutting.SearchFilters.csproj" />
-    <ProjectReference Include="..\..\InfrastructureLayer\CrossCutting.Security\CrossCutting.Security.csproj" />
-    <ProjectReference Include="..\..\InfrastructureLayer\CrossCutting\CrossCutting.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Enums\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.2.0" />
+    <PackageReference Include="Sixblue.CrossCutting.SearchFilters" Version="1.0.0" />
+    <PackageReference Include="Sixblue.CrossCutting.Security" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>

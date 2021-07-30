@@ -8,7 +8,7 @@ namespace Data.AccessObjects.Products
         private const string GetQuery = @"/* Product GetQuery */
             SELECT *
             FROM Product CD
-            INNER JOIN LOH L ON CD.IDLOH = L.ID
+            INNER JOIN Item L ON CD.IDItem = L.ID
             INNER JOIN ProductGroup CDG ON CDG.Id = CD.IdProductGroup
             INNER JOIN 
             ( 
@@ -25,7 +25,7 @@ namespace Data.AccessObjects.Products
         private const string QueryGetByIdentifier = @"/* Product SqlGetByIdentifierQuery */
             SELECT CD.*, L.*, CDG.*, M.*
             FROM Product CD 
-            INNER JOIN LOH L ON CD.IDLOH = L.ID
+            INNER JOIN Item L ON CD.IDItem = L.ID
             INNER JOIN ProductGroup CDG ON CDG.Id = CD.IdProductGroup
             INNER JOIN 
             ( 

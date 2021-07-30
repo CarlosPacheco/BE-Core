@@ -14,7 +14,7 @@ namespace Data.AccessObjects.Products
         {
             string query = $@"SELECT DISTINCT L.Id, L.CaseNumber, CD.Id
             FROM Product CD
-            INNER JOIN Loh L ON CD.IdLoh = L.Id";
+            INNER JOIN Item L ON CD.IdItem = L.Id";
 
             return DbConnection.Query<Product>(query).AsList();
         }

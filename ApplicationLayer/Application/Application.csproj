@@ -18,12 +18,11 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="Sixblue.CrossCutting.Web" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BusinessLayer\Business\Business.csproj" />
     <ProjectReference Include="..\..\DataLayer\DataAccessObjects\Data.AccessObjects.csproj" />
-    <ProjectReference Include="..\..\InfrastructureLayer\CrossCutting.Web\CrossCutting.Web.csproj" />
     <ProjectReference Include="..\DataTransferObjects\Data.TransferObjects.csproj" />
   </ItemGroup>
 

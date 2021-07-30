@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\ApplicationLayer\Application\Application.csproj" />
-    <ProjectReference Include="..\..\DataLayer\DataAccessObjects\Data.AccessObjects.csproj" />
     <PackageReference Include="Autofac" Version="6.2.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
     <PackageReference Include="AutoMapper" Version="10.1.1" />

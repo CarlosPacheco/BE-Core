@@ -23,8 +23,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\BusinessLayer\Business\Business.csproj" />
-    <ProjectReference Include="..\..\InfrastructureLayer\CrossCutting.Helpers\CrossCutting.Helpers.csproj" />
-    <ProjectReference Include="..\..\InfrastructureLayer\CrossCutting\CrossCutting.csproj" />
   </ItemGroup>
 
   <ItemGroup>
