@@ -27,8 +27,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.Core", "ServiceLayer\Ap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.TransferObjects", "ApplicationLayer\DataTransferObjects\Data.TransferObjects.csproj", "{D77DDFFF-5EFC-4161-917A-F36A6462DE15}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossCutting.NTypewriter", "InfrastructureLayer\CrossCutting.NTypewriter\CrossCutting.NTypewriter.csproj", "{F23E2855-AED5-4DD6-9FE4-9F8D3FEBDCD0}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,12 +64,6 @@ Global
 		{D77DDFFF-5EFC-4161-917A-F36A6462DE15}.QA|Any CPU.Build.0 = QA|Any CPU
 		{D77DDFFF-5EFC-4161-917A-F36A6462DE15}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D77DDFFF-5EFC-4161-917A-F36A6462DE15}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F23E2855-AED5-4DD6-9FE4-9F8D3FEBDCD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F23E2855-AED5-4DD6-9FE4-9F8D3FEBDCD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F23E2855-AED5-4DD6-9FE4-9F8D3FEBDCD0}.QA|Any CPU.ActiveCfg = Debug|Any CPU
-		{F23E2855-AED5-4DD6-9FE4-9F8D3FEBDCD0}.QA|Any CPU.Build.0 = Debug|Any CPU
-		{F23E2855-AED5-4DD6-9FE4-9F8D3FEBDCD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F23E2855-AED5-4DD6-9FE4-9F8D3FEBDCD0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -82,7 +74,6 @@ Global
 		{DFA1078B-4937-44F3-A4F7-B1E6EB6F2D7E} = {FFD19FF5-4337-4797-AACE-5992DDD13FE6}
 		{80F6B2D1-9EFF-45F6-AC3A-5AD824FAFBAE} = {4944D964-A037-4288-B216-DED526B1F837}
 		{D77DDFFF-5EFC-4161-917A-F36A6462DE15} = {09D0E130-A498-4D5C-BD53-076932510B53}
-		{F23E2855-AED5-4DD6-9FE4-9F8D3FEBDCD0} = {535C7D88-9BA1-43C1-967E-5CEBD43E45D9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A9DFEF16-3AA7-42D8-A0A9-9A75AEA34672}
