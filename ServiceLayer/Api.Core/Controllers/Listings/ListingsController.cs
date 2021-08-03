@@ -42,7 +42,7 @@ namespace Api.Core.Controllers.Listings
         {
             IEnumerable<ListingDto> result =_service.GetProductListing();
 
-            return Ok(result);;
+            return Ok(result);
         }
 
     }

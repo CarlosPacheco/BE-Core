@@ -1,0 +1,7 @@
+Convert cs files to typescript and dart with NTypewriter
+https://github.com/NeVeSpl/NTypewriter
+
+1- Download vs extension
+https://marketplace.visualstudio.com/items?itemName=NeVeS.NTypewriterEditorForVisualStudio
+2-
+git clone https://gitlab.sixblueinc.com/infrastructurelayer/CrossCutting.NTypewriter.git

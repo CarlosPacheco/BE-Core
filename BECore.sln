@@ -12,6 +12,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InfrastructureLayer", "InfrastructureLayer", "{535C7D88-9BA1-43C1-967E-5CEBD43E45D9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PresentationLayer", "PresentationLayer", "{F03F97C8-D970-4274-8407-631E5E198316}"
+	ProjectSection(SolutionItems) = preProject
+		InfrastructureLayer\NTypewriter.README = InfrastructureLayer\NTypewriter.README
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ServiceLayer", "ServiceLayer", "{4944D964-A037-4288-B216-DED526B1F837}"
 EndProject
