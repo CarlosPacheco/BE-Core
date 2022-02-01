@@ -21,6 +21,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using System.Collections.Generic;
+using CrossCutting.Security.Configurations;
 
 namespace Api.Core
 {
@@ -39,6 +41,10 @@ namespace Api.Core
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            //TODO:: add auth to the swagger, maybe change the config objs to singleton and remove the addoptions etc
+            AuthConfig authConfig = Configuration.GetSection(AuthConfig.Position).Get<AuthConfig>();
+            services.AddSingleton(authConfig);
+
             SwaggerOptionsConfig swaggerOptionsConfig = Configuration.GetSection(SwaggerOptionsConfig.Position).Get<SwaggerOptionsConfig>();
             CorsConfig corsConfig = Configuration.GetSection(CorsConfig.Position).Get<CorsConfig>();
 
@@ -61,14 +67,34 @@ namespace Api.Core
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 options.JsonSerializerOptions.Converters.Add(new PointConverter());
 
-                options.JsonSerializerOptions.IgnoreNullValues = true;
+                options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
                 options.JsonSerializerOptions.WriteIndented = true;
             });
 
             services.AddIdentityServerService<UserValidation>(Environment, Configuration);
 
             // Swagger UI
-            services.AddSwaggerGen(c => c.SwaggerDoc(swaggerOptionsConfig.Version, new OpenApiInfo { Title = swaggerOptionsConfig.Title, Version = swaggerOptionsConfig.Version }));
+            services.AddSwaggerGen(options => 
+            {
+                options.SwaggerDoc(swaggerOptionsConfig.Version, new OpenApiInfo { Title = swaggerOptionsConfig.EndpointName, Version = swaggerOptionsConfig.Version });
+
+                options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                {
+                    Type = SecuritySchemeType.OAuth2,
+                    Flows = new OpenApiOAuthFlows
+                    {
+                        AuthorizationCode = new OpenApiOAuthFlow
+                        {
+                            AuthorizationUrl = new Uri($"{authConfig.Authority}/connect/authorize"),
+                            TokenUrl = new Uri($"{authConfig.Authority}/connect/token"),
+                            Scopes = new Dictionary<string, string> {
+                                { swaggerOptionsConfig.OidcApiName, swaggerOptionsConfig.Title }
+                            }
+                        }
+                    }
+                });
+                options.OperationFilter<AuthorizeCheckOperationFilter>();
+            });
 
             // Configure object mapping (AutoMapper), Get the assembly, AutoMapper will scan our assembly and look for classes that inherit from Profile
             services.AddAutoMapper(typeof(MappingProfile));
@@ -112,7 +138,11 @@ namespace Api.Core
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint(swaggerOptionsConfig.Value.JsonRoute, swaggerOptionsConfig.Value.EndpointName);
+
                 c.RoutePrefix = swaggerOptionsConfig.Value.RoutePrefix;
+                c.OAuthClientId(swaggerOptionsConfig.Value.OidcSwaggerUIClientId);
+                c.OAuthAppName(swaggerOptionsConfig.Value.EndpointName);
+                c.OAuthUsePkce();
             });
 
             autoMapper.ConfigurationProvider.AssertConfigurationIsValid();

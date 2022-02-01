@@ -93,7 +93,7 @@ namespace Api.Core.Controllers.Products
         /// <param name="mediaTypeName"></param>
         /// <returns>The csv file with a list of <see cref="CaseDetails"/> instances</returns>  
         [Route("export", Name = "Product_Export")]
-        [HttpGet, ProducesResponseType(typeof(void), StatusCodes.Status200OK)]
+        [HttpGet, ProducesResponseType(typeof(void), StatusCodes.Status200OK)]//TODO: HeaderNames.ContentType
         public IActionResult Export([FromQuery] ProductSearchFilter searchFilter, [FromHeader(Name = "Content-Type")] string mediaTypeName)
         {
             Stream stream = _service.Export(searchFilter, mediaTypeName);

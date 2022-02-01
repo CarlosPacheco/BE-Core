@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,9 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="6.2.0" />
-    <PackageReference Include="Sixblue.CrossCutting.SearchFilters" Version="1.0.0" />
-    <PackageReference Include="Sixblue.CrossCutting.Security" Version="1.0.0" />
+    <PackageReference Include="Autofac" Version="6.3.0" />
+    <PackageReference Include="Sixblue.CrossCutting.SearchFilters" Version="2.0.0" />
+    <PackageReference Include="Sixblue.CrossCutting.Security" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
