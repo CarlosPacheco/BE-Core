@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Application.Services.Listings;
-using Business.SearchFilters;
 using CrossCutting.Web.Controllers;
 using Data.TransferObjects;
 using Microsoft.AspNetCore.Http;
@@ -34,7 +33,7 @@ namespace Api.Core.Controllers.Listings
         /// Get the listings Products 
         /// </summary>
         /// <returns>The list of Products </returns>
-        [Route("caseDetails", Name = "Listings_Product")]
+        [Route("products", Name = "Listings_Product")]
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<ListingDto>), StatusCodes.Status200OK)]
         public IActionResult GetProductListing()
