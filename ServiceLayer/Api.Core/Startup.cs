@@ -74,7 +74,7 @@ namespace Api.Core
             services.AddIdentityServerService<UserValidation>(Environment, Configuration);
 
             // Swagger UI
-            services.AddSwaggerGen(options => 
+            services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc(swaggerOptionsConfig.Version, new OpenApiInfo { Title = swaggerOptionsConfig.EndpointName, Version = swaggerOptionsConfig.Version });
 
@@ -124,6 +124,8 @@ namespace Api.Core
             //app.UseCookiePolicy();
             app.UseSerilogRequestLogging();
             app.UseRouting();
+
+            app.UseCorsPolicy();
 
             app.UseAuthentication();
             app.UseAuthorization();

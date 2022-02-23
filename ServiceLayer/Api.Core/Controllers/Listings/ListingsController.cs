@@ -4,7 +4,7 @@ using CrossCutting.Web.Controllers;
 using Data.TransferObjects;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Serilog;
+using Microsoft.Extensions.Logging;
 
 namespace Api.Core.Controllers.Listings
 {
@@ -24,7 +24,7 @@ namespace Api.Core.Controllers.Listings
         /// </summary>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        public ListingsController(ILogger logger, IListingsService service) : base(logger)
+        public ListingsController(ILogger<ListingsController> logger, IListingsService service) : base(logger)
         {
             _service = service;
         }

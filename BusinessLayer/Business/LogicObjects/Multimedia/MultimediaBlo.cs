@@ -4,8 +4,8 @@ using CrossCutting.Configurations;
 using CrossCutting.Security.Identity;
 using Interfaces.Data.AccessObjects;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Serilog;
 using System;
 using System.IO;
 
@@ -22,7 +22,7 @@ namespace Business.LogicObjects.MultimediaFiles
         /// </summary>
         /// <param name="authorization">Security information access object to be used by this instance</param>
         /// <param name="dataAccess">Application Request's data access object to be used by this instance</param>
-        public MultimediaBlo(IMultimediaDao dataAccess, IAuthorization authorization, ILogger logger, IConfiguration configuration, IOptions<UploadedConfig> config) : base(dataAccess, authorization, logger)
+        public MultimediaBlo(IMultimediaDao dataAccess, IAuthorization authorization, ILogger<MultimediaBlo> logger, IConfiguration configuration, IOptions<UploadedConfig> config) : base(dataAccess, authorization, logger)
         {
             Configuration = configuration;
             Config = config;

@@ -5,7 +5,7 @@ using Business.Entities;
 using CrossCutting.SearchFilters.DataAccess;
 using Dapper;
 using Interfaces.Data.AccessObjects;
-using Serilog;
+using Microsoft.Extensions.Logging;
 
 namespace Data.AccessObjects.MultimediaFiles
 {
@@ -16,7 +16,7 @@ namespace Data.AccessObjects.MultimediaFiles
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="dbConnection">Database <see cref="IDbConnection"/> to be use with the instance</param>
-        public MultimediaDao(ILogger logger, IDbConnection dbConnection, IPagedQueryBuilder pagedQueryBuilder) : base(logger, dbConnection, pagedQueryBuilder)
+        public MultimediaDao(ILogger<MultimediaDao> logger, IDbConnection dbConnection, IPagedQueryBuilder pagedQueryBuilder) : base(logger, dbConnection, pagedQueryBuilder)
         {
         }
 

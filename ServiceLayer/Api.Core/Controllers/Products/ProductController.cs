@@ -9,7 +9,7 @@ using CrossCutting.Web.Mime;
 using Data.TransferObjects;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Serilog;
+using Microsoft.Extensions.Logging;
 
 namespace Api.Core.Controllers.Products
 {
@@ -21,7 +21,7 @@ namespace Api.Core.Controllers.Products
         /// </summary>
         private readonly IProductService _service;
 
-        public ProductController(ILogger logger, IProductService service) : base(logger)
+        public ProductController(ILogger<ProductController> logger, IProductService service) : base(logger)
         {
             _service = service;
         }

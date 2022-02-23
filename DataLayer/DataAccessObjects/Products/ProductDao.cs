@@ -9,13 +9,13 @@ using CrossCutting.Exceptions;
 using CrossCutting.SearchFilters.DataAccess;
 using Dapper;
 using Interfaces.Data.AccessObjects.Products;
-using Serilog;
+using Microsoft.Extensions.Logging;
 
 namespace Data.AccessObjects.Products
 {
     public partial class ProductDao : BaseDao, IProductDao
     {
-        public ProductDao(ILogger logger, IDbConnection dbConnection, IPagedQueryBuilder pagedQueryBuilder) : base(logger, dbConnection, pagedQueryBuilder)
+        public ProductDao(ILogger<ProductDao> logger, IDbConnection dbConnection, IPagedQueryBuilder pagedQueryBuilder) : base(logger, dbConnection, pagedQueryBuilder)
         {
         }
 

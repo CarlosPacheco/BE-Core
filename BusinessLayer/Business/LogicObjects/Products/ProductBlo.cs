@@ -9,7 +9,7 @@ using CrossCutting.Helpers.Helpers;
 using CrossCutting.Security.Identity;
 using Dapper;
 using Interfaces.Data.AccessObjects.Products;
-using Serilog;
+using Microsoft.Extensions.Logging;
 
 namespace Business.LogicObjects.Products
 {
@@ -22,7 +22,7 @@ namespace Business.LogicObjects.Products
         /// </summary>
         /// <param name="authorization">Security information access object to be used by this instance</param>
         /// <param name="dataAccess">Application Request's data access object to be used by this instance</param>
-        public ProductBlo(IProductDao dataAccess, IAuthorization authorization, ILogger logger, IMultimediaBlo multimediaBLO) : base(dataAccess, authorization, logger)
+        public ProductBlo(IProductDao dataAccess, IAuthorization authorization, ILogger<ProductBlo> logger, IMultimediaBlo multimediaBLO) : base(dataAccess, authorization, logger)
         {
             MultimediaBLO = multimediaBLO;
         }
