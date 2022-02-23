@@ -7,14 +7,14 @@ namespace Data.AccessObjects.Products
     {
         private const string GetQuery = @"/* Product GetQuery */
             SELECT *
-            FROM Product CD
-            INNER JOIN Item L ON CD.IDItem = L.ID
-            INNER JOIN ProductGroup CDG ON CDG.Id = CD.IdProductGroup
+            FROM Product P
+            INNER JOIN Item I ON P.IDItem = I.ID
+            INNER JOIN ProductGroup PG ON PG.Id = P.IdProductGroup
             INNER JOIN 
             ( 
               SELECT Id, FilePath Name
               FROM Product
-            ) M ON M.Id = CD.Id
+            ) M ON M.Id = P.Id
             /**where**/
             ";
 
@@ -23,16 +23,16 @@ namespace Data.AccessObjects.Products
         /// Dapper SqlBuilder placeholders included in.
         /// </summary>
         private const string QueryGetByIdentifier = @"/* Product SqlGetByIdentifierQuery */
-            SELECT CD.*, L.*, CDG.*, M.*
-            FROM Product CD 
-            INNER JOIN Item L ON CD.IDItem = L.ID
-            INNER JOIN ProductGroup CDG ON CDG.Id = CD.IdProductGroup
+            SELECT P.*, I.*, PG.*, M.*
+            FROM Product P 
+            INNER JOIN Item I ON P.IDItem = I.ID
+            INNER JOIN ProductGroup PG ON PG.Id = P.IdProductGroup
             INNER JOIN 
             ( 
               SELECT Id, FilePath Name
               FROM Product
-            ) M ON M.Id = CD.Id
-            WHERE CD.Id = @Id ";
+            ) M ON M.Id = P.Id
+            WHERE P.Id = @Id ";
       
 
         private string GetGetQuery(ProductSearchFilter filter, out object parameters)
@@ -42,17 +42,17 @@ namespace Data.AccessObjects.Products
 
             if (!string.IsNullOrWhiteSpace(filter.Name))
             {
-                sqlBuilder.Where("CDG.Name LIKE @Name", new { Name = $"%{filter.Name}%" });
+                sqlBuilder.Where("PG.Name LIKE @Name", new { Name = $"%{filter.Name}%" });
             }
 
             if (filter.UpdatedOnStart.HasValue)
             {
-                sqlBuilder.Where("CD.UpdatedOn >= @UpdatedOnStart", new { filter.UpdatedOnStart });
+                sqlBuilder.Where("P.UpdatedOn >= @UpdatedOnStart", new { filter.UpdatedOnStart });
             }
 
             if (filter.UpdatedOnEnd.HasValue)
             {
-                sqlBuilder.Where("CD.UpdatedOn <= @UpdatedOnEnd", new { filter.UpdatedOnEnd });
+                sqlBuilder.Where("P.UpdatedOn <= @UpdatedOnEnd", new { filter.UpdatedOnEnd });
             }
 
             // Return all parameters to be reused (passed to Dapper exec/query method)
