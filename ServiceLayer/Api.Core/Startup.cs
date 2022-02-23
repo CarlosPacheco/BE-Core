@@ -106,6 +106,7 @@ namespace Api.Core
         /// <param name="builder"></param>
         public void ConfigureContainer(ContainerBuilder builder)
         {
+            builder.Register(c => new LoggerConfiguration().ReadFrom.Configuration(Configuration).CreateLogger()).As<ILogger>().SingleInstance();
             builder.RegisterModule(new DefaultApplicationModule(Environment.IsDevelopment(), Configuration));
         }
 

@@ -3,7 +3,6 @@ using Business.Core;
 using CrossCutting.Security;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Serilog;
 using System;
 
 namespace Business
@@ -46,7 +45,6 @@ namespace Business
         private void RegisterCommonDependencies(ContainerBuilder builder)
         {
             builder.RegisterAssemblyTypes(ThisAssembly).AsClosedTypesOf(typeof(IBaseBlo<>)).AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.Register(c => Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(_configuration).CreateLogger()).As<ILogger>().SingleInstance();
             builder.RegisterModule(new DefaultSecurityModule(_isDevelopment, _configuration));
         }
 
