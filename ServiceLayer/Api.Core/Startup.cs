@@ -41,15 +41,15 @@ namespace Api.Core
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            // IoC Logger 
+            Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(Configuration).CreateLogger();
+
             //TODO:: add auth to the swagger, maybe change the config objs to singleton and remove the addoptions etc
             AuthConfig authConfig = Configuration.GetSection(AuthConfig.Position).Get<AuthConfig>();
             services.AddSingleton(authConfig);
 
             SwaggerOptionsConfig swaggerOptionsConfig = Configuration.GetSection(SwaggerOptionsConfig.Position).Get<SwaggerOptionsConfig>();
             CorsConfig corsConfig = Configuration.GetSection(CorsConfig.Position).Get<CorsConfig>();
-
-            // Add functionality to inject IOptions<T>
-            services.AddOptions();
 
             // Add our Config object so it can be injected
             services.Configure<SwaggerOptionsConfig>(Configuration.GetSection(SwaggerOptionsConfig.Position))
@@ -106,7 +106,6 @@ namespace Api.Core
         /// <param name="builder"></param>
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            builder.Register(c => new LoggerConfiguration().ReadFrom.Configuration(Configuration).CreateLogger()).As<ILogger>().SingleInstance();
             builder.RegisterModule(new DefaultApplicationModule(Environment.IsDevelopment(), Configuration));
         }
 

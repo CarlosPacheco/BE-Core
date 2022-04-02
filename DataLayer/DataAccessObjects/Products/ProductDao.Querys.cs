@@ -33,12 +33,11 @@ namespace Data.AccessObjects.Products
               FROM Product
             ) M ON M.Id = P.Id
             WHERE P.Id = @Id ";
-      
 
         private string GetGetQuery(ProductSearchFilter filter, out object parameters)
         {
             SqlBuilder sqlBuilder = new SqlBuilder();
-            SqlBuilder.Template sqlTemplate = sqlBuilder.AddTemplate(GetQuery);           
+            SqlBuilder.Template sqlTemplate = sqlBuilder.AddTemplate(GetQuery);
 
             if (!string.IsNullOrWhiteSpace(filter.Name))
             {
