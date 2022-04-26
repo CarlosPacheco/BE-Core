@@ -41,19 +41,18 @@ namespace Api.Core.Controllers.Products
         /// <summary>
         /// Updates a Product with the specified information
         /// </summary>
-        /// <param name="id">Product unique identifier</param>
-        /// <param name="productDto">Patch object containing the new Product value</param>
+        /// <param name="dto">Patch object containing the new Product value</param>
         /// <returns>The modified Product object</returns>
-        [Route("{id}")]
-        [HttpPatch, ProducesResponseType(typeof(void), StatusCodes.Status200OK), ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult Update(int id, ProductDto productDto, [FromForm] IFormFile file)
+        [Route("")]
+        [HttpPut, ProducesResponseType(typeof(void), StatusCodes.Status200OK), ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult Update(ProductDto dto, [FromForm] IFormFile file)
         {
-            if (productDto != null && id != productDto.Id)
+            if (dto == null || dto.Id == null || dto.Id <= 0)
             {
                 return BadRequest();
             }
 
-            _service.Update(productDto, file);
+            _service.Update(dto, file);
 
             return Ok();
         }
@@ -61,15 +60,15 @@ namespace Api.Core.Controllers.Products
         /// <summary>
         /// Creates a new Product 
         /// </summary>
-        /// <param name="productDto">The new entity description object</param>
+        /// <param name="dto">The new entity description object</param>
         /// <returns>The newly created Product</returns>       
         [Route("", Name = "Product_Create")]
         [HttpPost, ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
-        public IActionResult Create(ProductDto productDto, [FromForm] IFormFile file)
+        public IActionResult Create(ProductDto dto, [FromForm] IFormFile file)
         {
-            ProductDto newproductDto = _service.Create(productDto, file);
+            ProductDto newDto = _service.Create(dto, file);
 
-            return CreatedAtRoute("Product_GetById", new { id = productDto.Id }, newproductDto);
+            return CreatedAtRoute("Product_GetById", new { id = newDto.Id }, newDto);
         }
 
         /// <summary>
@@ -81,7 +80,7 @@ namespace Api.Core.Controllers.Products
         [HttpGet, ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK), ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetById(int id)
         {
-            ProductDto productDto = _service.GetById(id);
+            ProductDto? productDto = _service.GetById(id);
 
             return productDto == null ? NotFound() : Ok(productDto);
         }

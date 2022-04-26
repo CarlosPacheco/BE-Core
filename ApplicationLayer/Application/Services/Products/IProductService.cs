@@ -36,7 +36,7 @@ namespace Application.Services.Products
         /// </summary>
         /// <param name="id">The Product unique identifier</param>
         /// <returns>Product with the specified unique identifier</returns>
-        ProductDto GetById(int id);
+        ProductDto? GetById(int id);
 
         /// <summary>
         /// Export Product

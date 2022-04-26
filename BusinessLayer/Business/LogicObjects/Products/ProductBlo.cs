@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Business.Core;
@@ -40,21 +41,24 @@ namespace Business.LogicObjects.Products
         /// <summary>
         /// Updates a Product with the specified information
         /// </summary>
-        /// <param name="productDto">Patch object containing the new Product value</param>
+        /// <param name="entity">Patch object containing the new Product value</param>
         /// <returns>The modified Product object</returns>
-        public void Update(Product productDto)
+        public void Update(Product entity)
         {
-            DataAccess.Update(productDto);
+            entity.UpdatedBy = Authorization.UserName;
+            entity.UpdatedOn = DateTime.UtcNow;
+            DataAccess.Update(entity);
         }
 
         /// <summary>
         /// Creates a new Product 
         /// </summary>
-        /// <param name="productDto">The new entity description object</param>
+        /// <param name="entity">The new entity description object</param>
         /// <returns>The newly created Product</returns>  
-        public Product Create(Product productDto)
+        public Product Create(Product entity)
         {
-            return GetById(DataAccess.Create(productDto));
+            entity.CreatedBy = Authorization.UserName;
+            return GetById(DataAccess.Create(entity));
         }
 
         /// <summary>
@@ -62,7 +66,7 @@ namespace Business.LogicObjects.Products
         /// </summary>
         /// <param name="id">The Product unique identifier</param>
         /// <returns>Product with the specified unique identifier</returns>
-        public Product GetById(int id)
+        public Product? GetById(int id)
         {
             return DataAccess.GetById(id);
         }

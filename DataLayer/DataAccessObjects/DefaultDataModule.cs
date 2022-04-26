@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Business.Core.Data;
 using Business.Core.Data.Interfaces;
 using CrossCutting.SearchFilters.DataAccess;
 using CrossCutting.SearchFilters.DataAccess.Npgsql;
@@ -48,6 +49,7 @@ namespace Data.AccessObjects
         {
             builder.RegisterAssemblyTypes(ThisAssembly).As<IBaseDao>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.Register(db => new NpgsqlConnection(_configuration.GetConnectionString("PostgreSQL"))).As<IDbConnection>().InstancePerLifetimeScope();
+            builder.RegisterType<TransactionManager>().As<ITransactionManager>().InstancePerLifetimeScope();
             builder.RegisterType<PagedQueryBuilder>().As<IPagedQueryBuilder>().SingleInstance();
         }
 

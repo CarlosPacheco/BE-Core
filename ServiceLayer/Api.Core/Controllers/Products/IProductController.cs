@@ -17,17 +17,16 @@ namespace Api.Core.Controllers.Products
         /// <summary>
         /// Updates a Product with the specified information
         /// </summary>
-        /// <param name="id">Product unique identifier</param>
-        /// <param name="caseDto">Patch object containing the new Product value</param>
+        /// <param name="dto">Patch object containing the new Product value</param>
         /// <returns>The modified Product object</returns>
-        IActionResult Update(int id, ProductDto caseDto, IFormFile file);
+        IActionResult Update(ProductDto dto, IFormFile file);
 
         /// <summary>
         /// Creates a new Product 
         /// </summary>
-        /// <param name="caseDto">The new entity description object</param>
+        /// <param name="dto">The new entity description object</param>
         /// <returns>The newly created Product</returns>  
-        IActionResult Create(ProductDto caseDto, IFormFile file);
+        IActionResult Create(ProductDto dto, IFormFile file);
 
         /// <summary>
         /// Gets an Product by it's unique identifier

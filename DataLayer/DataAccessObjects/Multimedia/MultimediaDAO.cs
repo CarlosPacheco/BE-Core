@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using Business.Core.Data;
+using Business.Core.Data.Interfaces;
 using Business.Entities;
 using CrossCutting.SearchFilters.DataAccess;
 using Dapper;
@@ -16,7 +17,7 @@ namespace Data.AccessObjects.MultimediaFiles
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="dbConnection">Database <see cref="IDbConnection"/> to be use with the instance</param>
-        public MultimediaDao(ILogger<MultimediaDao> logger, IDbConnection dbConnection, IPagedQueryBuilder pagedQueryBuilder) : base(logger, dbConnection, pagedQueryBuilder)
+        public MultimediaDao(ILogger<MultimediaDao> logger, IDbConnection dbConnection, ITransactionManager transactionManager, IPagedQueryBuilder pagedQueryBuilder) : base(logger, dbConnection, transactionManager, pagedQueryBuilder)
         {
         }
 

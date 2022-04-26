@@ -60,10 +60,9 @@ namespace Application.Services.Products
         /// </summary>
         /// <param name="id">The Product unique identifier</param>
         /// <returns>Product with the specified unique identifier</returns>
-        public ProductDto GetById(int id)
+        public ProductDto? GetById(int id)
         {
-            Product product = BusinessLogic.GetById(id);
-            ProductDto productDto = Mapper.Map<ProductDto>(product);
+            ProductDto? productDto = Mapper.Map<ProductDto>(BusinessLogic.GetById(id));
 
             return productDto;
         }

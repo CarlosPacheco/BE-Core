@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Business.Core.Data;
+using Business.Core.Data.Interfaces;
 using Business.Entities;
 using Business.SearchFilters;
 using CrossCutting.Exceptions;
@@ -15,7 +16,7 @@ namespace Data.AccessObjects.Products
 {
     public partial class ProductDao : BaseDao, IProductDao
     {
-        public ProductDao(ILogger<ProductDao> logger, IDbConnection dbConnection, IPagedQueryBuilder pagedQueryBuilder) : base(logger, dbConnection, pagedQueryBuilder)
+        public ProductDao(ILogger<ProductDao> logger, IDbConnection dbConnection, ITransactionManager transactionManager, IPagedQueryBuilder pagedQueryBuilder) : base(logger, dbConnection, transactionManager, pagedQueryBuilder)
         {
         }
 
@@ -118,16 +119,10 @@ namespace Data.AccessObjects.Products
         /// </summary>
         /// <param name="id">The case unique identifier</param>
         /// <returns>Case with the specified unique identifier</returns>
-        public Product GetById(int id)
+        public Product? GetById(int id)
         {
-            Product Product = DbConnection.Query<Product>(QueryGetByIdentifier, new { Id = id }, CurrentTransaction).FirstOrDefault();
-
-            if (Product == null)
-            {
-                return null;
-            }
-
-            return Product;
+            Product? product = DbConnection.Query<Product>(QueryGetByIdentifier, new { Id = id }, CurrentTransaction).FirstOrDefault();
+            return product;
         }
 
     }

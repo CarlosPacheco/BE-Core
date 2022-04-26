@@ -10,6 +10,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Sixblue.CrossCutting.Web" Version="2.0.1" />
+    <PackageReference Include="Sixblue.CrossCutting.Web" Version="2.0.2" />
   </ItemGroup>
 
   <ItemGroup>

@@ -34,7 +34,7 @@ namespace Business.LogicObjects.Products
         /// </summary>
         /// <param name="id">The Product unique identifier</param>
         /// <returns>Product with the specified unique identifier</returns>
-        Product GetById(int id);
+        Product? GetById(int id);
 
         /// <summary>
         /// Export Products
