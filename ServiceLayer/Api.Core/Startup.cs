@@ -23,6 +23,11 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Collections.Generic;
 using CrossCutting.Security.Configurations;
+using Microsoft.AspNetCore.HttpOverrides;
+using System.Net;
+using Microsoft.Extensions.Http;
+using CrossCutting.Web;
+using System.Net.Http;
 
 namespace Api.Core
 {
@@ -68,36 +73,76 @@ namespace Api.Core
                 options.JsonSerializerOptions.Converters.Add(new PointConverter());
 
                 options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
-                options.JsonSerializerOptions.WriteIndented = true;
+                if (Environment.IsDevelopment())
+                    options.JsonSerializerOptions.WriteIndented = true;
             });
 
-            services.AddIdentityServerService<UserValidation>(Environment, Configuration);
+            services.AddIdentityServerService<UserValidation>(Environment, Configuration, Environment.IsDevelopment() ? new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+            } : null);
+
+            if (Environment.IsDevelopment())
+                services.AddTransient<HttpMessageHandlerBuilder, DangerousAcceptAnyServerCertHttpMessageHandlerBuilder>();
 
             // Swagger UI
+            string _swaggerName = "oauth2";
+
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc(swaggerOptionsConfig.Version, new OpenApiInfo { Title = swaggerOptionsConfig.EndpointName, Version = swaggerOptionsConfig.Version });
 
-                options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                options.AddSecurityDefinition(_swaggerName, new OpenApiSecurityScheme
                 {
                     Type = SecuritySchemeType.OAuth2,
+                    In = ParameterLocation.Header,
+                    Name = "Authorization",
                     Flows = new OpenApiOAuthFlows
                     {
                         AuthorizationCode = new OpenApiOAuthFlow
                         {
                             AuthorizationUrl = new Uri($"{authConfig.Authority}/connect/authorize"),
                             TokenUrl = new Uri($"{authConfig.Authority}/connect/token"),
-                            Scopes = new Dictionary<string, string> {
-                                { swaggerOptionsConfig.OidcApiName, swaggerOptionsConfig.Title }
+                            Scopes = new Dictionary<string, string>
+                            {
+                                { "rc_fourfriends", "Four Friends data" }
                             }
                         }
                     }
                 });
-                options.OperationFilter<AuthorizeCheckOperationFilter>();
+
+                options.AddSecurityRequirement(
+                   new OpenApiSecurityRequirement
+                   {
+                        {
+                            new OpenApiSecurityScheme{
+                                Reference = new OpenApiReference
+                                {
+                                    Id = _swaggerName,
+                                    Type = ReferenceType.SecurityScheme
+                                }
+                            },
+                            new List<string>()
+                        }
+                   });
             });
 
             // Configure object mapping (AutoMapper), Get the assembly, AutoMapper will scan our assembly and look for classes that inherit from Profile
             services.AddAutoMapper(typeof(MappingProfile));
+
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+
+                options.KnownNetworks.Add(new IPNetwork(IPAddress.Parse("172.28.0.0"), 16));
+                options.KnownNetworks.Add(new IPNetwork(IPAddress.Parse("209.126.11.207"), 16));
+                options.KnownProxies.Add(IPAddress.Parse("209.126.11.207"));
+                if (Environment.IsDevelopment())
+                {
+                    options.KnownNetworks.Clear();
+                    options.KnownProxies.Clear();
+                }
+            });
         }
 
         /// <summary>
@@ -106,6 +151,7 @@ namespace Api.Core
         /// <param name="builder"></param>
         public void ConfigureContainer(ContainerBuilder builder)
         {
+            builder.Register(c => Log.Logger).As<ILogger>().SingleInstance();
             builder.RegisterModule(new DefaultApplicationModule(Environment.IsDevelopment(), Configuration));
         }
 
@@ -115,6 +161,7 @@ namespace Api.Core
             if (Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSerilogRequestLogging();
             }
 
             app.UseCustomExceptionMiddleware();
@@ -140,14 +187,16 @@ namespace Api.Core
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint(swaggerOptionsConfig.Value.JsonRoute, swaggerOptionsConfig.Value.EndpointName);
-
                 c.RoutePrefix = swaggerOptionsConfig.Value.RoutePrefix;
                 c.OAuthClientId(swaggerOptionsConfig.Value.OidcSwaggerUIClientId);
+                c.OAuthScopes("openid", "profile");
                 c.OAuthAppName(swaggerOptionsConfig.Value.EndpointName);
+                c.OAuthScopeSeparator(" ");
                 c.OAuthUsePkce();
             });
 
-            autoMapper.ConfigurationProvider.AssertConfigurationIsValid();
+            if (Environment.IsDevelopment())
+                autoMapper.ConfigurationProvider.AssertConfigurationIsValid();
 
             SqlTypeMapper.SetupTypesMappingAndHandlers();
 

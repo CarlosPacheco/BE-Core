@@ -2,8 +2,6 @@
 using Business;
 using Business.Core.Services;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using System;
 
 namespace Application
 {
@@ -17,10 +15,6 @@ namespace Application
         private bool _isDevelopment;
         private readonly IConfiguration _configuration;
 
-        public DefaultApplicationModule()
-        {
-            _isDevelopment = !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable(Environments.Development));
-        }
 
         public DefaultApplicationModule(bool isDevelopment, IConfiguration configuration)
         {
