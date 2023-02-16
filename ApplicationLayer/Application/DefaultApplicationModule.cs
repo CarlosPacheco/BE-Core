@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Business;
 using Business.Core.Services;
+using Data.AccessObjects;
 using Microsoft.Extensions.Configuration;
 
 namespace Application
@@ -39,6 +40,7 @@ namespace Application
         {
             builder.RegisterAssemblyTypes(ThisAssembly).AsClosedTypesOf(typeof(IBaseService<>)).AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterModule(new DefaultBusinessModule(_isDevelopment, _configuration));
+            builder.RegisterModule(new DefaultDataModule(_isDevelopment, _configuration));
         }
 
         private void RegisterDevelopmentOnlyDependencies(ContainerBuilder builder)

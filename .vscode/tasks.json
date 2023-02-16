@@ -1,0 +1,24 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "msbuild",
+			"problemMatcher": [
+				"$msCompile"
+			],
+			"group": "build",
+			"label": "Build: solution",
+			"detail": "Build the BECore.sln solution using dotnet build"
+		},
+		{
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [ "build" ],
+            "options": {
+                "cwd": "${workspaceFolder}/ServiceLayer/Api.Core"
+            },
+            "problemMatcher": "$tsc"
+        }
+	]
+}

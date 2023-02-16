@@ -50,11 +50,11 @@ namespace Api.Core
             Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(Configuration).CreateLogger();
 
             //TODO:: add auth to the swagger, maybe change the config objs to singleton and remove the addoptions etc
-            AuthConfig authConfig = Configuration.GetSection(AuthConfig.Position).Get<AuthConfig>();
+            AuthConfig? authConfig = Configuration.GetSection(AuthConfig.Position).Get<AuthConfig>();
             services.AddSingleton(authConfig);
 
-            SwaggerOptionsConfig swaggerOptionsConfig = Configuration.GetSection(SwaggerOptionsConfig.Position).Get<SwaggerOptionsConfig>();
-            CorsConfig corsConfig = Configuration.GetSection(CorsConfig.Position).Get<CorsConfig>();
+            SwaggerOptionsConfig? swaggerOptionsConfig = Configuration.GetSection(SwaggerOptionsConfig.Position).Get<SwaggerOptionsConfig>();
+            CorsConfig? corsConfig = Configuration.GetSection(CorsConfig.Position).Get<CorsConfig>();
 
             // Add our Config object so it can be injected
             services.Configure<SwaggerOptionsConfig>(Configuration.GetSection(SwaggerOptionsConfig.Position))
@@ -168,7 +168,7 @@ namespace Api.Core
             app.UseHttpsRedirection();
             // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware/?view=aspnetcore-2.2#order
             app.UseStaticFiles();
-            //app.UseCookiePolicy();
+           
             app.UseSerilogRequestLogging();
             app.UseRouting();
 
@@ -198,12 +198,10 @@ namespace Api.Core
             if (Environment.IsDevelopment())
                 autoMapper.ConfigurationProvider.AssertConfigurationIsValid();
 
-            SqlTypeMapper.SetupTypesMappingAndHandlers();
+            SqlTypeMapper.SetupTypesMappingAndHandlers("Business");
 
             // Type Descriptors
             TypeDescriptor.AddAttributes(typeof(DateTime), new TypeConverterAttribute(typeof(UtcDateTimeConverter)));
-
-            app.AddNpgsqlLogManager();
         }
     }
 }

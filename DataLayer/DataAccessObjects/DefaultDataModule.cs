@@ -5,6 +5,7 @@ using CrossCutting.SearchFilters.DataAccess;
 using CrossCutting.SearchFilters.DataAccess.Npgsql;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Npgsql;
 using System;
 using System.Data;
@@ -48,7 +49,14 @@ namespace Data.AccessObjects
         private void RegisterCommonDependencies(ContainerBuilder builder)
         {
             builder.RegisterAssemblyTypes(ThisAssembly).As<IBaseDao>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.Register(db => new NpgsqlConnection(_configuration.GetConnectionString("PostgreSQL"))).As<IDbConnection>().InstancePerLifetimeScope();
+            builder.Register(db =>
+            {
+                // type NpgsqlDataSource
+                NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder(_configuration.GetConnectionString("PostgreSQL"));
+                dataSourceBuilder.UseNetTopologySuite(geographyAsDefault: true);
+                dataSourceBuilder.UseLoggerFactory(db.Resolve<ILoggerFactory>());
+                return dataSourceBuilder.Build().CreateConnection();
+            }).As<IDbConnection>().InstancePerLifetimeScope();
             builder.RegisterType<TransactionManager>().As<ITransactionManager>().InstancePerLifetimeScope();
             builder.RegisterType<PagedQueryBuilder>().As<IPagedQueryBuilder>().SingleInstance();
         }
